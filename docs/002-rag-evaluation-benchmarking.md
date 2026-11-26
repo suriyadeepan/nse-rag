@@ -57,3 +57,27 @@
 - `uv run python scripts/evaluate_rag.py --help` — passed; confirms the CLI loads without contacting retrieval services.
 - `git diff --check` — passed.
 - The evaluator was not run against the live index in this task, so no retrieval scores or `eval/results.json` are claimed. Full-index retrieval and Cohere behavior remain T003 verification.
+
+### T003 — Full-index retrieval comparison
+
+- Ran `uv run --env-file .env python scripts/evaluate_rag.py` against the existing `data/index`; no ingestion or embedding was run. The inventory check found **36,853 persisted nodes**, **7,591 distinct source `pdf_path` values**, and **7,591 distinct circular IDs**. The source-PDF count confirms the F001 baseline; circular-ID coverage is reported as a separate count.
+- Evaluated all 24 identical labelled queries in `dense`, `hybrid`, and `hybrid-rerank` with `candidate_top_k=20` and `top_k=5`. Each mode has 24 per-query records. Metrics collapse repeated chunks by circular ID before computing Recall@5 and MRR. `eval/results.json` contains per-query unique ranked IDs, raw retrieved chunk IDs, expected IDs, query-level metrics, overall means, and means by query type.
+- The first live attempt reached Cohere's trial limit and stopped with HTTP 429 (trial key limit: 10 calls/minute); it did not save a partial results file. Added a 6.2-second minimum interval between rerank requests and a pacing regression test, then reran successfully. All 24 rerank requests were issued sequentially. The successful evaluator run took about 3 minutes, excluding the cooldown before retry.
+- The rerank pacing setting is included in result metadata. Cohere service limit and configured interval are recorded to make the live run reproducible.
+
+#### Live retrieval results
+
+| Mode | Overall Recall@5 | Overall MRR |
+|---|---:|---:|
+| Dense | 0.4375 | 0.4063 |
+| Hybrid | 0.7083 | 0.5708 |
+| Hybrid + Rerank | 0.7292 | 0.7153 |
+
+Per-type means are saved in `eval/results.json`. In brief: dense exact-ID queries scored 0.0000 Recall@5 / 0.0000 MRR, while hybrid and hybrid-rerank scored 1.0000 Recall@5; reranking improved exact-ID MRR to 1.0000. On semantic queries, reranking scored 0.5000 Recall@5 / 0.4167 MRR, below dense and hybrid (both 0.6667 Recall@5; MRR 0.4583 and 0.6667 respectively). T004/T005 will select final report examples and perform answer-grounding checks.
+
+#### Verification
+
+- `uv run pytest -q tests/test_eval_metrics.py tests/test_eval_data.py` — passed (9 tests; third-party deprecation warnings only), including a regression check that rerank requests are separated by at least 6.2 seconds.
+- `uv run --env-file .env python scripts/evaluate_rag.py` — completed: 24 queries × 3 modes; results saved to `eval/results.json`.
+- Parsed the saved JSON and verified 24 records exist for each mode, settings are 20 candidates/top 5, and inventory is 36,853 nodes / 7,591 source PDFs / 7,591 circular IDs.
+- First live attempt failed at the Cohere trial rate limit (HTTP 429); the paced retry completed successfully. This failure is retained here as execution evidence.

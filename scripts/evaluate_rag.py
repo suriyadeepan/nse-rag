@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import time
 from collections import defaultdict
 from collections.abc import Callable, Iterable, Mapping
 from pathlib import Path
@@ -21,6 +22,7 @@ EXPECTED_NODES = 36_853
 EXPECTED_SOURCE_PDFS = 7_591
 MODES = (RetrievalMode.DENSE, RetrievalMode.HYBRID, RetrievalMode.HYBRID_RERANK)
 SETTINGS = RetrievalSettings(candidate_top_k=20, top_k=5)
+COHERE_MIN_INTERVAL_SECONDS = 6.2
 
 
 def load_queries(path: Path = EVAL_FILE) -> list[dict[str, Any]]:
@@ -115,6 +117,7 @@ def evaluate_queries(
     retrieval = retrieve_fn or retrieve
     per_mode: dict[str, list[dict[str, Any]]] = {mode.value: [] for mode in MODES}
     per_query = []
+    last_cohere_call_at: float | None = None
 
     for record in queries:
         query = record["query"]
@@ -122,6 +125,13 @@ def evaluate_queries(
         mode_results = {}
         for mode in MODES:
             # Deliberately serial: hybrid-rerank makes one Cohere request per query.
+            if mode == RetrievalMode.HYBRID_RERANK:
+                now = time.monotonic()
+                if last_cohere_call_at is not None:
+                    delay = COHERE_MIN_INTERVAL_SECONDS - (now - last_cohere_call_at)
+                    if delay > 0:
+                        time.sleep(delay)
+                last_cohere_call_at = time.monotonic()
             passages = retrieval(query, indexes, mode=mode, settings=SETTINGS)
             raw_ranked_ids = [
                 node.node.metadata.get("circular_id") for node in passages
@@ -149,6 +159,7 @@ def evaluate_queries(
         "settings": {
             "candidate_top_k": SETTINGS.candidate_top_k,
             "top_k": SETTINGS.top_k,
+            "cohere_min_interval_seconds": COHERE_MIN_INTERVAL_SECONDS,
         },
         "queries": per_query,
         "metrics": {

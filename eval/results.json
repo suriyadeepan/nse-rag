@@ -1,0 +1,1561 @@
+{
+  "query_count": 24,
+  "settings": {
+    "candidate_top_k": 20,
+    "top_k": 5,
+    "cohere_min_interval_seconds": 6.2
+  },
+  "queries": [
+    {
+      "query": "What is the subject of NSE circular 0001fd562caa1c25?",
+      "type": "exact_id",
+      "expected_ids": [
+        "0001fd562caa1c25"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "2e05513156afee5a",
+            "a8a431fa3b16ab37",
+            "c650334c86e22de2"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "2e05513156afee5a",
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "c650334c86e22de2",
+            "c650334c86e22de2"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "2e05513156afee5a",
+            "0001fd562caa1c25",
+            "a8a431fa3b16ab37"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "2e05513156afee5a",
+            "0001fd562caa1c25",
+            "a8a431fa3b16ab37",
+            "0001fd562caa1c25",
+            "2e05513156afee5a"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "a8a431fa3b16ab37",
+            "aba1ef5b4e03ad32"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "a8a431fa3b16ab37",
+            "a8a431fa3b16ab37",
+            "aba1ef5b4e03ad32"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "What is the subject of NSE circular 000205e2a3e7c439?",
+      "type": "exact_id",
+      "expected_ids": [
+        "000205e2a3e7c439"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "c650334c86e22de2"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "2e05513156afee5a",
+            "a8a431fa3b16ab37",
+            "c650334c86e22de2"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "000205e2a3e7c439",
+            "2e05513156afee5a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "000205e2a3e7c439",
+            "2e05513156afee5a",
+            "000205e2a3e7c439",
+            "2e05513156afee5a"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "000205e2a3e7c439"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "000205e2a3e7c439",
+            "000205e2a3e7c439",
+            "000205e2a3e7c439",
+            "000205e2a3e7c439",
+            "000205e2a3e7c439"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "What is the subject of NSE circular 0006c75b3e7d74a0?",
+      "type": "exact_id",
+      "expected_ids": [
+        "0006c75b3e7d74a0"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "c650334c86e22de2",
+            "2e05513156afee5a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "a8a431fa3b16ab37",
+            "c650334c86e22de2",
+            "2e05513156afee5a",
+            "2e05513156afee5a"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "0006c75b3e7d74a0",
+            "8564292fdb3a2173",
+            "c650334c86e22de2"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "0006c75b3e7d74a0",
+            "a8a431fa3b16ab37",
+            "8564292fdb3a2173",
+            "c650334c86e22de2"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0006c75b3e7d74a0",
+            "a8a431fa3b16ab37",
+            "27c6ab079a28b78d",
+            "aba1ef5b4e03ad32"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0006c75b3e7d74a0",
+            "a8a431fa3b16ab37",
+            "a8a431fa3b16ab37",
+            "27c6ab079a28b78d",
+            "aba1ef5b4e03ad32"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "What is the subject of NSE circular 002a2392b14074e2?",
+      "type": "exact_id",
+      "expected_ids": [
+        "002a2392b14074e2"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "2e05513156afee5a",
+            "2e05513156afee5a",
+            "a8a431fa3b16ab37"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "002a2392b14074e2",
+            "2e05513156afee5a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "002a2392b14074e2",
+            "2e05513156afee5a",
+            "002a2392b14074e2",
+            "2e05513156afee5a"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "002a2392b14074e2",
+            "a8a431fa3b16ab37",
+            "aba1ef5b4e03ad32"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "002a2392b14074e2",
+            "002a2392b14074e2",
+            "a8a431fa3b16ab37",
+            "a8a431fa3b16ab37",
+            "aba1ef5b4e03ad32"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "What is the subject of NSE circular 00b388f1536c50c4?",
+      "type": "exact_id",
+      "expected_ids": [
+        "00b388f1536c50c4"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "c650334c86e22de2"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "c650334c86e22de2"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "00b388f1536c50c4",
+            "2e05513156afee5a",
+            "27c6ab079a28b78d"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "00b388f1536c50c4",
+            "2e05513156afee5a",
+            "27c6ab079a28b78d",
+            "a8a431fa3b16ab37"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "a8a431fa3b16ab37",
+            "387d683f2dffacbc",
+            "85faf830e58dca76"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "a8a431fa3b16ab37",
+            "a8a431fa3b16ab37",
+            "387d683f2dffacbc",
+            "85faf830e58dca76"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "What is the subject of NSE circular 0277f3f018affc12?",
+      "type": "exact_id",
+      "expected_ids": [
+        "0277f3f018affc12"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "c650334c86e22de2"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "2e05513156afee5a",
+            "c650334c86e22de2",
+            "a8a431fa3b16ab37",
+            "c650334c86e22de2"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "a8a431fa3b16ab37",
+            "0277f3f018affc12",
+            "2e05513156afee5a",
+            "c650334c86e22de2"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a8a431fa3b16ab37",
+            "0277f3f018affc12",
+            "2e05513156afee5a",
+            "0277f3f018affc12",
+            "c650334c86e22de2"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0277f3f018affc12",
+            "27c6ab079a28b78d",
+            "a8a431fa3b16ab37"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0277f3f018affc12",
+            "0277f3f018affc12",
+            "27c6ab079a28b78d",
+            "a8a431fa3b16ab37",
+            "a8a431fa3b16ab37"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "In the Gayatri Projects suspension revocation notice, when does trading resume?",
+      "type": "keyword_phrase",
+      "expected_ids": [
+        "0001fd562caa1c25"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0e4fd8494f9e4b78"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "dae611c3ca81e182",
+            "0e4fd8494f9e4b78"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0e4fd8494f9e4b78"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "dae611c3ca81e182",
+            "0e4fd8494f9e4b78"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0e4fd8494f9e4b78"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0e4fd8494f9e4b78"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Which company was provisionally empanelled as an algorithmic trading solutions provider, and what type of algo was listed?",
+      "type": "keyword_phrase",
+      "expected_ids": [
+        "0006c75b3e7d74a0"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "075fa795bfc794af",
+            "450491def5758600",
+            "756a1b46d760c331",
+            "7e93a1b7d6586ecb",
+            "8107e58b5029e83a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "075fa795bfc794af",
+            "450491def5758600",
+            "756a1b46d760c331",
+            "7e93a1b7d6586ecb",
+            "8107e58b5029e83a"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "3ea71b1d7938d2e1",
+            "756a1b46d760c331",
+            "4b351d4b68e3378c",
+            "075fa795bfc794af",
+            "8107e58b5029e83a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "3ea71b1d7938d2e1",
+            "756a1b46d760c331",
+            "4b351d4b68e3378c",
+            "075fa795bfc794af",
+            "8107e58b5029e83a"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "a9ed0d1da406450d",
+            "578b584051d67986",
+            "cd80ea4799646e77",
+            "685ef1eb32d7f89f",
+            "4b351d4b68e3378c"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a9ed0d1da406450d",
+            "578b584051d67986",
+            "cd80ea4799646e77",
+            "685ef1eb32d7f89f",
+            "4b351d4b68e3378c"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        }
+      }
+    },
+    {
+      "query": "During the November 21, 2026 SLBM mock session, do trades create fund pay-in or pay-out obligations?",
+      "type": "keyword_phrase",
+      "expected_ids": [
+        "000205e2a3e7c439"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "157d4d1ebff51059",
+            "dd5e935e7d4a6ffe",
+            "6dde4528ef2a8c63",
+            "657aabd58a494d7b"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "157d4d1ebff51059",
+            "dd5e935e7d4a6ffe",
+            "6dde4528ef2a8c63",
+            "657aabd58a494d7b",
+            "6dde4528ef2a8c63"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "cbe480f0ca976c14",
+            "157d4d1ebff51059",
+            "cbce6ef4688a418a",
+            "404a80d126422d54",
+            "321e92278118305b"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "cbe480f0ca976c14",
+            "157d4d1ebff51059",
+            "cbce6ef4688a418a",
+            "404a80d126422d54",
+            "321e92278118305b"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "000205e2a3e7c439",
+            "dd3f93aa3d3d8565",
+            "cbce6ef4688a418a",
+            "321e92278118305b",
+            "1076133a638ce543"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "000205e2a3e7c439",
+            "dd3f93aa3d3d8565",
+            "cbce6ef4688a418a",
+            "321e92278118305b",
+            "1076133a638ce543"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Which series are covered by the June 2026 Reversal Trade Cancellation Mechanism stock list?",
+      "type": "keyword_phrase",
+      "expected_ids": [
+        "02370ae61ea8c0e5"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "02370ae61ea8c0e5",
+            "85e1b3b517687a99",
+            "656d65f6a5a19e27",
+            "3a45bf59750c5b45",
+            "a35550274c96201c"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "02370ae61ea8c0e5",
+            "85e1b3b517687a99",
+            "656d65f6a5a19e27",
+            "3a45bf59750c5b45",
+            "a35550274c96201c"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "02370ae61ea8c0e5",
+            "dacb02b15026f580",
+            "85e1b3b517687a99",
+            "3a45bf59750c5b45"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "02370ae61ea8c0e5",
+            "02370ae61ea8c0e5",
+            "dacb02b15026f580",
+            "85e1b3b517687a99",
+            "3a45bf59750c5b45"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "02370ae61ea8c0e5",
+            "fea032a81eb145d7",
+            "3a45bf59750c5b45",
+            "a3cd1a83fa639041"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "02370ae61ea8c0e5",
+            "02370ae61ea8c0e5",
+            "fea032a81eb145d7",
+            "3a45bf59750c5b45",
+            "a3cd1a83fa639041"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "When does the name Hercules Hoists Limited change to Hercules Investments Limited?",
+      "type": "keyword_phrase",
+      "expected_ids": [
+        "00b388f1536c50c4"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "70524b2b8f68e87e",
+            "5592f959febce9b4",
+            "1f09cbd3ec9bfeff"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "70524b2b8f68e87e",
+            "5592f959febce9b4",
+            "1f09cbd3ec9bfeff"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "70524b2b8f68e87e",
+            "5f02086710202d82",
+            "5592f959febce9b4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "70524b2b8f68e87e",
+            "5f02086710202d82",
+            "5592f959febce9b4"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "826cbbf22e154dab",
+            "5592f959febce9b4",
+            "1f09cbd3ec9bfeff"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "826cbbf22e154dab",
+            "5592f959febce9b4",
+            "1f09cbd3ec9bfeff"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Name one settlement holiday listed for the commodity derivatives segment on a weekend in 2026.",
+      "type": "keyword_phrase",
+      "expected_ids": [
+        "019be8813f32f2c3"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "019be8813f32f2c3",
+            "77cf5f376885908e",
+            "0ba2c5552d113b6b"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "019be8813f32f2c3",
+            "019be8813f32f2c3",
+            "019be8813f32f2c3",
+            "77cf5f376885908e",
+            "0ba2c5552d113b6b"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "019be8813f32f2c3",
+            "77cf5f376885908e",
+            "2abbf507a263f0b0",
+            "0ba2c5552d113b6b"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "019be8813f32f2c3",
+            "019be8813f32f2c3",
+            "77cf5f376885908e",
+            "2abbf507a263f0b0",
+            "0ba2c5552d113b6b"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "019be8813f32f2c3",
+            "77cf5f376885908e",
+            "2abbf507a263f0b0"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "019be8813f32f2c3",
+            "019be8813f32f2c3",
+            "77cf5f376885908e",
+            "2abbf507a263f0b0",
+            "019be8813f32f2c3"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "A trading suspension on Gayatri Projects was lifted; on what date did the exchange say trading would restart?",
+      "type": "semantic",
+      "expected_ids": [
+        "0001fd562caa1c25"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "1b06bb45962f3cdc"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "dae611c3ca81e182",
+            "1b06bb45962f3cdc"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "f7353f4b3a0d78da"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "f7353f4b3a0d78da"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "7b2fa38ab751bba4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "dae611c3ca81e182",
+            "7b2fa38ab751bba4"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Which firm received provisional approval to offer whitebox algorithmic trading solutions to NSE members?",
+      "type": "semantic",
+      "expected_ids": [
+        "0006c75b3e7d74a0"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "2e05513156afee5a",
+            "450491def5758600",
+            "075fa795bfc794af",
+            "0006c75b3e7d74a0",
+            "7e93a1b7d6586ecb"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "2e05513156afee5a",
+            "450491def5758600",
+            "075fa795bfc794af",
+            "0006c75b3e7d74a0",
+            "7e93a1b7d6586ecb"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.25
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "0006c75b3e7d74a0",
+            "075fa795bfc794af",
+            "4b351d4b68e3378c",
+            "0fca1b4b5e9a09b8",
+            "450491def5758600"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0006c75b3e7d74a0",
+            "075fa795bfc794af",
+            "4b351d4b68e3378c",
+            "0fca1b4b5e9a09b8",
+            "450491def5758600"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "578b584051d67986",
+            "a9ed0d1da406450d",
+            "4b351d4b68e3378c",
+            "685ef1eb32d7f89f",
+            "1ed973f00593342a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "578b584051d67986",
+            "a9ed0d1da406450d",
+            "4b351d4b68e3378c",
+            "685ef1eb32d7f89f",
+            "1ed973f00593342a"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        }
+      }
+    },
+    {
+      "query": "What market segment will the new Treasury bills and state loans be available in, and starting when?",
+      "type": "semantic",
+      "expected_ids": [
+        "002a2392b14074e2"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "7677b888a3f14633",
+            "8471147f2f8ae5f7",
+            "174cbcaa71d94a69",
+            "f193fd0aaa9f8c8d",
+            "c2c9b11d519096cb"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "7677b888a3f14633",
+            "8471147f2f8ae5f7",
+            "174cbcaa71d94a69",
+            "f193fd0aaa9f8c8d",
+            "c2c9b11d519096cb"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "7677b888a3f14633",
+            "377b3ee7cab47655",
+            "1a1931153469bf3b",
+            "8471147f2f8ae5f7",
+            "174cbcaa71d94a69"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "7677b888a3f14633",
+            "377b3ee7cab47655",
+            "1a1931153469bf3b",
+            "8471147f2f8ae5f7",
+            "174cbcaa71d94a69"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "174cbcaa71d94a69",
+            "a69ea6df799512f7",
+            "c9a8e8b0a06078f4",
+            "7677b888a3f14633",
+            "b24dd73b16dddc4f"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "174cbcaa71d94a69",
+            "a69ea6df799512f7",
+            "c9a8e8b0a06078f4",
+            "7677b888a3f14633",
+            "b24dd73b16dddc4f"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        }
+      }
+    },
+    {
+      "query": "What change to the company name does the exchange announce for the HERCULES symbol?",
+      "type": "semantic",
+      "expected_ids": [
+        "00b388f1536c50c4"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "5592f959febce9b4",
+            "826cbbf22e154dab",
+            "70524b2b8f68e87e"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "5592f959febce9b4",
+            "826cbbf22e154dab",
+            "70524b2b8f68e87e"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "9b4014047d2d46e0",
+            "1aeb1d37d7b60cd3",
+            "5592f959febce9b4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "9b4014047d2d46e0",
+            "1aeb1d37d7b60cd3",
+            "5592f959febce9b4"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "826cbbf22e154dab",
+            "5592f959febce9b4",
+            "9b4014047d2d46e0"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "826cbbf22e154dab",
+            "5592f959febce9b4",
+            "9b4014047d2d46e0"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "For Diwali's 2026 Muhurat trading, what date does the notice give for the session?",
+      "type": "semantic",
+      "expected_ids": [
+        "0277f3f018affc12"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "346d1c0fec400a5a",
+            "c006b8b1b08166d2",
+            "1dc3a9b0ae6e9fd9",
+            "440d25cc95ad3b89"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "346d1c0fec400a5a",
+            "c006b8b1b08166d2",
+            "1dc3a9b0ae6e9fd9",
+            "440d25cc95ad3b89",
+            "440d25cc95ad3b89"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "346d1c0fec400a5a",
+            "c006b8b1b08166d2",
+            "1dc3a9b0ae6e9fd9",
+            "ad2123def0060290",
+            "440d25cc95ad3b89"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "346d1c0fec400a5a",
+            "c006b8b1b08166d2",
+            "1dc3a9b0ae6e9fd9",
+            "ad2123def0060290",
+            "440d25cc95ad3b89"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "440d25cc95ad3b89",
+            "c006b8b1b08166d2",
+            "1dc3a9b0ae6e9fd9",
+            "ff07caf10ad43c57",
+            "346d1c0fec400a5a"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "440d25cc95ad3b89",
+            "c006b8b1b08166d2",
+            "1dc3a9b0ae6e9fd9",
+            "ff07caf10ad43c57",
+            "346d1c0fec400a5a"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        }
+      }
+    },
+    {
+      "query": "What additional margin measure did the clearing corporation announce for precious-metal futures in October 2025?",
+      "type": "semantic",
+      "expected_ids": [
+        "0056795fa8001874"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "5938ab504f312cde",
+            "0056795fa8001874",
+            "1e0de9d95ce536ac",
+            "101946529e2f69ba"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "5938ab504f312cde",
+            "0056795fa8001874",
+            "1e0de9d95ce536ac",
+            "5938ab504f312cde",
+            "101946529e2f69ba"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "0056795fa8001874",
+            "101946529e2f69ba",
+            "1e0de9d95ce536ac",
+            "4c3d7923918c7b7f",
+            "514948159820a7f4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0056795fa8001874",
+            "101946529e2f69ba",
+            "1e0de9d95ce536ac",
+            "4c3d7923918c7b7f",
+            "514948159820a7f4"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "101946529e2f69ba",
+            "0056795fa8001874",
+            "4c3d7923918c7b7f",
+            "514948159820a7f4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "101946529e2f69ba",
+            "0056795fa8001874",
+            "0056795fa8001874",
+            "4c3d7923918c7b7f",
+            "514948159820a7f4"
+          ],
+          "recall@5": 1.0,
+          "mrr": 0.5
+        }
+      }
+    },
+    {
+      "query": "Give the effective dates for the Hercules name change and the Current Infraprojects move from trade-for-trade to the rolling segment.",
+      "type": "multi_circular",
+      "expected_ids": [
+        "00b388f1536c50c4",
+        "0006ec6de19b9b41"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "470fe78b68362e0d",
+            "0006ec6de19b9b41",
+            "b15fb70fbf4e0cb4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "3440ee036036aadf",
+            "470fe78b68362e0d",
+            "0006ec6de19b9b41",
+            "b15fb70fbf4e0cb4"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "00b388f1536c50c4",
+            "0006ec6de19b9b41",
+            "3440ee036036aadf",
+            "7fd005a6bf36803d",
+            "94ecee3d1410b039"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "00b388f1536c50c4",
+            "0006ec6de19b9b41",
+            "3440ee036036aadf",
+            "7fd005a6bf36803d",
+            "94ecee3d1410b039"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0006ec6de19b9b41",
+            "00b388f1536c50c4",
+            "848cecaa4361fa42",
+            "94ecee3d1410b039",
+            "7fd005a6bf36803d"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0006ec6de19b9b41",
+            "00b388f1536c50c4",
+            "848cecaa4361fa42",
+            "94ecee3d1410b039",
+            "7fd005a6bf36803d"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Which circulars cover Gayatri Projects' trading resumption and Current Infraprojects' transfer to the rolling segment, and what are their effective dates?",
+      "type": "multi_circular",
+      "expected_ids": [
+        "0001fd562caa1c25",
+        "0006ec6de19b9b41"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0006ec6de19b9b41"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "0006ec6de19b9b41",
+            "dae611c3ca81e182"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "0001fd562caa1c25",
+            "0006ec6de19b9b41",
+            "9a8ad3130b03d45c",
+            "dae611c3ca81e182"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0001fd562caa1c25",
+            "0006ec6de19b9b41",
+            "0001fd562caa1c25",
+            "9a8ad3130b03d45c",
+            "dae611c3ca81e182"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "0006ec6de19b9b41",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "0006ec6de19b9b41",
+            "0001fd562caa1c25",
+            "0001fd562caa1c25",
+            "dae611c3ca81e182",
+            "dae611c3ca81e182"
+          ],
+          "recall@5": 1.0,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Identify the circulars about new Treasury bills/SDLs and extra margin on gold/silver futures; when did the listing take effect and what contracts attracted the margin?",
+      "type": "multi_circular",
+      "expected_ids": [
+        "002a2392b14074e2",
+        "0056795fa8001874"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "3d4a2129d8178acf",
+            "1a1931153469bf3b",
+            "0caf0b3e2b29ca73",
+            "b3b2272c0e888f51",
+            "459f7282cc39ebfe"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "3d4a2129d8178acf",
+            "1a1931153469bf3b",
+            "0caf0b3e2b29ca73",
+            "b3b2272c0e888f51",
+            "459f7282cc39ebfe"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "3d4a2129d8178acf",
+            "6bad8b7b31761743",
+            "b3b2272c0e888f51",
+            "7cf424d16c2d2e1d",
+            "0056795fa8001874"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "3d4a2129d8178acf",
+            "6bad8b7b31761743",
+            "b3b2272c0e888f51",
+            "7cf424d16c2d2e1d",
+            "0056795fa8001874"
+          ],
+          "recall@5": 0.5,
+          "mrr": 0.2
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "101946529e2f69ba",
+            "514948159820a7f4",
+            "0056795fa8001874",
+            "4b0e015795a92a3d",
+            "1e0de9d95ce536ac"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "101946529e2f69ba",
+            "514948159820a7f4",
+            "0056795fa8001874",
+            "4b0e015795a92a3d",
+            "1e0de9d95ce536ac"
+          ],
+          "recall@5": 0.5,
+          "mrr": 0.3333333333333333
+        }
+      }
+    },
+    {
+      "query": "Which notices set out 2026 commodity settlement holidays and the 2026 Muhurat session, and what dates do they specify?",
+      "type": "multi_circular",
+      "expected_ids": [
+        "019be8813f32f2c3",
+        "0277f3f018affc12"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "019be8813f32f2c3",
+            "0ba2c5552d113b6b",
+            "37114805619534a1"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "019be8813f32f2c3",
+            "019be8813f32f2c3",
+            "0ba2c5552d113b6b",
+            "019be8813f32f2c3",
+            "37114805619534a1"
+          ],
+          "recall@5": 0.5,
+          "mrr": 1.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "77cf5f376885908e",
+            "019be8813f32f2c3",
+            "2abbf507a263f0b0"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "77cf5f376885908e",
+            "019be8813f32f2c3",
+            "2abbf507a263f0b0",
+            "77cf5f376885908e",
+            "019be8813f32f2c3"
+          ],
+          "recall@5": 0.5,
+          "mrr": 0.5
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "77cf5f376885908e",
+            "2abbf507a263f0b0",
+            "019be8813f32f2c3",
+            "37114805619534a1"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "77cf5f376885908e",
+            "2abbf507a263f0b0",
+            "019be8813f32f2c3",
+            "019be8813f32f2c3",
+            "37114805619534a1"
+          ],
+          "recall@5": 0.5,
+          "mrr": 0.3333333333333333
+        }
+      }
+    },
+    {
+      "query": "Compare the exchange's January ASM notice with its April ESM notice: which surveillance measures do they concern and when were the notices issued?",
+      "type": "multi_circular",
+      "expected_ids": [
+        "004593f561909ea9",
+        "01c1933b3b9a9c71"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "e59e4422c3d0c5be",
+            "e0ee43fe19488acc",
+            "268eb0f129211ab8",
+            "ecffadf695e1e218",
+            "ec78d41f3775f9f4"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "e59e4422c3d0c5be",
+            "e0ee43fe19488acc",
+            "268eb0f129211ab8",
+            "ecffadf695e1e218",
+            "ec78d41f3775f9f4"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "e59e4422c3d0c5be",
+            "23686fb813e7c529",
+            "e0ee43fe19488acc",
+            "837e3a4f7bd1479b",
+            "268eb0f129211ab8"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "e59e4422c3d0c5be",
+            "23686fb813e7c529",
+            "e0ee43fe19488acc",
+            "837e3a4f7bd1479b",
+            "268eb0f129211ab8"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "004593f561909ea9",
+            "8d5624bdd4903286",
+            "268eb0f129211ab8",
+            "c797cad25838d397",
+            "5a54f57491a4f1db"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "004593f561909ea9",
+            "8d5624bdd4903286",
+            "268eb0f129211ab8",
+            "c797cad25838d397",
+            "5a54f57491a4f1db"
+          ],
+          "recall@5": 0.5,
+          "mrr": 1.0
+        }
+      }
+    },
+    {
+      "query": "Which circulars describe the June RTCM stock list and ST-ASM Stage I inclusion, and what eligibility or margin rule does each notice state?",
+      "type": "multi_circular",
+      "expected_ids": [
+        "02370ae61ea8c0e5",
+        "00f8f41b17a62f91"
+      ],
+      "modes": {
+        "dense": {
+          "ranked_ids": [
+            "6c5858aafb0d6738",
+            "22ce4c4940b35027",
+            "5f519b945780874a",
+            "a4c7a6367bfdcc9f",
+            "b3214cbafab0aa71"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "6c5858aafb0d6738",
+            "22ce4c4940b35027",
+            "5f519b945780874a",
+            "a4c7a6367bfdcc9f",
+            "b3214cbafab0aa71"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid": {
+          "ranked_ids": [
+            "a4c7a6367bfdcc9f",
+            "6c5858aafb0d6738",
+            "b3214cbafab0aa71",
+            "30c4f4f2599f5586",
+            "87efda5fa8d531ed"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "a4c7a6367bfdcc9f",
+            "6c5858aafb0d6738",
+            "b3214cbafab0aa71",
+            "30c4f4f2599f5586",
+            "87efda5fa8d531ed"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "hybrid-rerank": {
+          "ranked_ids": [
+            "52d6efe2c479ad12",
+            "a4c7a6367bfdcc9f",
+            "87efda5fa8d531ed",
+            "30c4f4f2599f5586",
+            "b3214cbafab0aa71"
+          ],
+          "retrieved_chunk_circular_ids": [
+            "52d6efe2c479ad12",
+            "a4c7a6367bfdcc9f",
+            "87efda5fa8d531ed",
+            "30c4f4f2599f5586",
+            "b3214cbafab0aa71"
+          ],
+          "recall@5": 0.0,
+          "mrr": 0.0
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "dense": {
+      "overall": {
+        "query_count": 24,
+        "recall@5": 0.4375,
+        "mrr": 0.40625
+      },
+      "by_type": {
+        "exact_id": {
+          "query_count": 6,
+          "recall@5": 0.0,
+          "mrr": 0.0
+        },
+        "keyword_phrase": {
+          "query_count": 6,
+          "recall@5": 0.6666666666666666,
+          "mrr": 0.6666666666666666
+        },
+        "multi_circular": {
+          "query_count": 6,
+          "recall@5": 0.4166666666666667,
+          "mrr": 0.5
+        },
+        "semantic": {
+          "query_count": 6,
+          "recall@5": 0.6666666666666666,
+          "mrr": 0.4583333333333333
+        }
+      }
+    },
+    "hybrid": {
+      "overall": {
+        "query_count": 24,
+        "recall@5": 0.7083333333333334,
+        "mrr": 0.5708333333333333
+      },
+      "by_type": {
+        "exact_id": {
+          "query_count": 6,
+          "recall@5": 1.0,
+          "mrr": 0.5
+        },
+        "keyword_phrase": {
+          "query_count": 6,
+          "recall@5": 0.6666666666666666,
+          "mrr": 0.6666666666666666
+        },
+        "multi_circular": {
+          "query_count": 6,
+          "recall@5": 0.5,
+          "mrr": 0.45
+        },
+        "semantic": {
+          "query_count": 6,
+          "recall@5": 0.6666666666666666,
+          "mrr": 0.6666666666666666
+        }
+      }
+    },
+    "hybrid-rerank": {
+      "overall": {
+        "query_count": 24,
+        "recall@5": 0.7291666666666666,
+        "mrr": 0.7152777777777778
+      },
+      "by_type": {
+        "exact_id": {
+          "query_count": 6,
+          "recall@5": 1.0,
+          "mrr": 1.0
+        },
+        "keyword_phrase": {
+          "query_count": 6,
+          "recall@5": 0.8333333333333334,
+          "mrr": 0.8333333333333334
+        },
+        "multi_circular": {
+          "query_count": 6,
+          "recall@5": 0.5833333333333334,
+          "mrr": 0.611111111111111
+        },
+        "semantic": {
+          "query_count": 6,
+          "recall@5": 0.5,
+          "mrr": 0.4166666666666667
+        }
+      }
+    }
+  },
+  "index": {
+    "node_count": 36853,
+    "source_pdf_count": 7591,
+    "circular_id_count": 7591
+  },
+  "modes": [
+    "dense",
+    "hybrid",
+    "hybrid-rerank"
+  ],
+  "distinct_circular_ids_in_index": 7591
+}

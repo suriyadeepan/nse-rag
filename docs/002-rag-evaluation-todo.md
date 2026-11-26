@@ -22,7 +22,7 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 
 ## T003 — Run full-index retrieval comparison
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETE — all 24 queries ran through all three modes on the verified persisted F001 index; actual ranked IDs and metrics are saved in `eval/results.json`, with evidence in the implementation journal.
 - **Action:** Run the evaluator under `uv` using the existing `data/index`; verify 36,853 persisted nodes and 7,591 distinct indexed source PDF paths from node `pdf_path` metadata against F001's baseline. Report circular-ID coverage separately. Run all 24 queries across all three modes, save actual results and record command, runtime, API behavior and any failures.
 - **Files:** `eval/results.json`, `docs/002-rag-evaluation-benchmarking.md`
 - **Requirements / plan:** R002–R007, R010.1–R010.3; P003, P008, P011, P013, P015

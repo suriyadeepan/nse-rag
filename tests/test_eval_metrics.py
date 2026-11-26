@@ -85,6 +85,31 @@ def test_evaluate_queries_uses_same_query_and_settings_in_each_mode_sequentially
     assert json.loads(json.dumps(result))["metrics"]["dense"]["overall"]["query_count"] == 1
 
 
+def test_rerank_calls_are_spaced_under_trial_rate_limit(monkeypatch):
+    clock = [0.0]
+    rerank_times = []
+
+    def fake_sleep(seconds):
+        clock[0] += seconds
+
+    def fake_retrieve(query, indexes, *, mode, settings):
+        if mode.value == "hybrid-rerank":
+            rerank_times.append(clock[0])
+        return [node("A")]
+
+    monkeypatch.setattr(EVALUATOR.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(EVALUATOR.time, "sleep", fake_sleep)
+    evaluate_queries(
+        [
+            {"query": f"q{i}", "type": "semantic", "expected_ids": ["A"]}
+            for i in range(3)
+        ],
+        indexes="persisted",
+        retrieve_fn=fake_retrieve,
+    )
+    assert rerank_times == [0.0, 6.2, 12.4]
+
+
 def test_inventory_counts_documents_separately_from_circular_ids(tmp_path):
     nodes = [
         {"metadata": {"pdf_path": "a.pdf", "circular_id": "A"}},
