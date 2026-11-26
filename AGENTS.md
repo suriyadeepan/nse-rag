@@ -18,3 +18,9 @@
 - **Git:** Inspect `git status` before each top-level TODO, not nested items. If dirty, inspect and ask how to proceed. Never silently carry, overwrite or discard changes. Stage only task-related files; review staged diffs and run `git diff --cached --check`. Auto-commit only when TODO items are completed, only after all relevant tests and verification pass.
 
 - **Efficiency:** Minimize tokens/tool calls. Read only relevant files. Keep responses concise.
+
+## Workflow
+- Use `$orchestrate` for feature development.
+- After plan approval, execute automatically through convergence.
+- Invoke `$decide` before asking the user about decisions.
+- Respect all project rules and approval gates.
