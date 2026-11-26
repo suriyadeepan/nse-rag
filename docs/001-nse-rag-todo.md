@@ -24,6 +24,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T003 — Build and persist same-run local dense and BM25 indexes
 
+- **Status:** COMPLETE — bounded local Chroma writes, persistent node corpus, same-node BM25 reconstruction, and reopen consistency checks are implemented; evidence is in `docs/001-nse-rag.md`.
+
 - **Action:** Add bounded-batch embedding and Chroma writes to a fresh local POC collection, using OpenAI `text-embedding-3-small`. Retain/reconstruct the complete matching node corpus for BM25 and query-time reopening; report found, metadata-loaded, indexed and skipped counts and log failures.
 - **Files:** `src/nse_rag/ingest.py`, `src/nse_rag/index_store.py`, `tests/test_index_store.py`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R005–R008, R011; P001–P002, P006–P009, P012–P013

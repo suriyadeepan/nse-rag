@@ -19,3 +19,11 @@
 - Malformed/non-object metadata, unavailable or unmatched metadata records, unreadable PDFs, extraction failures, and PDFs without usable text are logged. A mismatched stored path still attempts the specified ID/stem fallback.
 - `uv run pytest -q tests/test_ingest.py tests/test_compatibility.py` passed (5 tests). `PYTHONPATH=scripts uv run pytest -q` passed (10 tests). Tests cover aggregate exclusion, path/ID/stem matching, malformed JSON and missing-path logs, deterministic order, empty/unreadable input handling, identity fallback, page metadata, and exclusion of archive listing page.
 - The supplied local `data/pdfs` and `data/metadata` directories contain no corpus files in this checkout, so full-corpus behavior and metadata/PDF identity spot-checks have not been performed; those remain for T008.
+
+## T003 — Local dense and BM25 index persistence
+
+- Added `src/nse_rag/index_store.py`. It creates a fresh local Chroma collection, extracts one PDF at a time, inserts chunks in bounded batches (default 128 nodes), and writes each successfully inserted node to local `nodes.jsonl` with its node ID and metadata.
+- The dense embedding adapter defaults to OpenAI `text-embedding-3-small`. Tests inject LlamaIndex `MockEmbedding`, so automated persistence checks make no API calls.
+- Reopening reconstructs BM25 from the saved node JSONL and reopens the persisted Chroma collection. It compares the complete node ID set from the JSONL with Chroma IDs (read in bounded pages) and fails if the two indexes differ. The build result includes both query indexes and counts for PDFs found, metadata records loaded, documents indexed/skipped, and nodes indexed.
+- `uv run pytest -q tests/test_index_store.py tests/test_ingest.py` passed (6 tests). `tests/test_index_store.py` verifies batch sizes, counts, BM25/Chroma node ID equality, reopen behavior, clean collection replacement, and textless PDF skip reporting.
+- No external embedding API or remote database was used. The local PDF and metadata directories contain no corpus files in this checkout, so the full 7,500-PDF embedding run remains for T008.
