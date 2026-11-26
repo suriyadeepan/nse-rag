@@ -81,3 +81,16 @@ Per-type means are saved in `eval/results.json`. In brief: dense exact-ID querie
 - `uv run --env-file .env python scripts/evaluate_rag.py` — completed: 24 queries × 3 modes; results saved to `eval/results.json`.
 - Parsed the saved JSON and verified 24 records exist for each mode, settings are 20 candidates/top 5, and inventory is 36,853 nodes / 7,591 source PDFs / 7,591 circular IDs.
 - First live attempt failed at the Cohere trial rate limit (HTTP 429); the paced retry completed successfully. This failure is retained here as execution evidence.
+
+### T004 — Answer grounding spot-check
+
+- Generated nine answers (three per mode) with `answer_from_passages` in `nse_rag.answer`, which uses GPT-4.1-mini. For each sample, retrieved passages again from the same persisted indexes with `RetrievalSettings(20, 5)`; Cohere calls for the three reranked samples were sequential and separated by at least 6.2 seconds.
+- The nine-case generation command was run twice because the first command's console output was truncated before all citation details could be inspected. The report classifies the final nine-answer set; 18 model completions were made in total. This duplicated generation was not part of the planned 5–10 reported samples.
+- Manually checked each answer's cited passages against the recorded circular ID and actual PDF page number. The nine query/mode selections, concise answer summaries, cited circulars/pages, and evidence notes are in `eval/report.md`.
+- Grounding counts: dense supported 3, unsupported 0, insufficient evidence 0; hybrid supported 3, unsupported 0, insufficient evidence 0; hybrid-rerank supported 3, unsupported 0, insufficient evidence 0. Each mode denominator is three.
+- Query 14 is a useful caveat: the reranked answer cited passages that support the listed whitebox algo providers, but those were different provider circulars from the query's single labelled expected ID. It is supported as a statement grounded in its citations while remaining a retrieval-target miss; the two judgments are recorded separately.
+
+#### Verification
+
+- `uv run --env-file .env python -` — opened existing local indexes, retrieved the nine selected query/mode passage sets, and generated each answer using the existing GPT-4.1-mini answer path; completed successfully.
+- Manual review — all nine answer citations were inspected against their cited passage content and PDF page metadata. No LLM judge or automated claim-level validator was used.

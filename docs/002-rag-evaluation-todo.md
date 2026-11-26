@@ -31,7 +31,7 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 
 ## T004 — Generate and manually classify answer samples
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETE — nine GPT-4.1-mini answers (three per mode) manually checked against cited PDF passages; classifications and evidence notes are in `eval/report.md` and the implementation journal.
 - **Action:** Select nine representative queries (three per retrieval mode), reuse retrieved passages and the existing GPT-4.1-mini answer pipeline, then manually classify each answer as supported, unsupported or insufficient evidence by checking cited passages. Record brief evidence notes and counts by mode.
 - **Files:** `eval/report.md`, `docs/002-rag-evaluation-benchmarking.md`
 - **Requirements / plan:** R008–R010.4; P004, P012, P016
