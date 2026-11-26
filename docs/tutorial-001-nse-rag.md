@@ -29,6 +29,10 @@ The command processes sorted PDFs, creates a fresh Chroma collection and matchin
 uv run --env-file .env nse-rag query "When does the circular take effect?" --mode dense
 uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid
 uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid-rerank
+
+uv run nse-rag query "who were the people banned from dealing in securities according to scrip of India Energy Exchange limited? and why? ELI5"
+
+uv run nse-rag query "Summarize the circular about Praxis Home Retail  Limited on 25th nov 2026 in 3 bullet points"
 ```
 
 - `dense` searches local Chroma vectors.
