@@ -74,6 +74,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T008 — Validate the full corpus and live retrieval modes
 
+- **Status:** COMPLETE — full local corpus ingestion, PDF/metadata identity spot-check, exact-ID and semantic retrieval in all modes, citations and insufficient-evidence behavior verified; evidence and embedding-cost estimate are in `docs/001-nse-rag.md`.
+
 - **Action:** Run ingestion against the complete available local `data/pdfs/*.pdf` corpus with API credentials, inspect the summary/failure log and identity spot-checks, then run exact-ID and semantic queries through all three modes and inspect answer citations and evidence sufficiency behavior.
 - **Files:** `docs/001-nse-rag.md`, `README.md`
 - **Requirements / plan:** R003–R004, R006–R008, R010–R014, R016; P007–P014

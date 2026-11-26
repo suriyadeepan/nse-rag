@@ -65,3 +65,17 @@
 - Local persistence smoke: `uv run pytest -q tests/test_index_store.py` passed (2 tests), including fresh local Chroma creation, matching BM25 node set, persisted collection reopen through `open_local_indexes`, and replacement of a stale POC collection.
 - CLI smoke: `uv run --env-file .env nse-rag --help`, `uv run --env-file .env nse-rag ingest --help`, and `uv run --env-file .env nse-rag query --help` all passed. `.env` was loaded by `uv` but its values were not printed; help commands made no provider calls.
 - These are automated and local smoke results only. Full-corpus ingestion, exact-ID/semantic retrieval against that corpus, and live OpenAI/Cohere calls remain for T008.
+
+## T008 — Full-corpus ingestion cost estimate
+
+- Full-corpus ingestion indexed 36,853 chunks. Counting the persisted node text with the `text-embedding-3-small` tokenizer (`tiktoken.encoding_for_model`) yielded approximately 11,798,379 input tokens. At the OpenAI listed price of $0.02 per 1 million input tokens, the estimated corpus embedding charge is **$0.24 USD** (about $0.23597 before rounding).
+- This is a local estimate based on persisted indexed text and published pricing, not the provider's account-level billed usage. It excludes query embedding and GPT-4.1-mini answer calls. OpenAI pricing source checked 2026-11-26: https://developers.openai.com/api/docs/models/text-embedding-3-small
+
+## T008 — Full-corpus and live retrieval verification
+
+- Ran the documented full-corpus command: `time uv run --env-file .env nse-rag ingest`. It completed in 11m46.72s: **7,614 PDFs found, 7,611 metadata records loaded, 7,591 documents indexed, 23 skipped, and 36,853 chunks indexed**. Extraction warnings for textless/unusable PDFs were printed during ingestion; the command completed and persisted/reopened the local Chroma collection and matching BM25 node set.
+- Spot-checked `data/pdfs/0001fd562caa1c25.pdf` against its JSON. The metadata title, “Revocation of Trading Suspension in Equity Shares of Gayatri Projects Limited,” matches the PDF heading; the PDF itself identifies `NSE/CML/73562` and Circular Ref. No. `0556/2026`. Citation page numbers came from extracted PDF page metadata (page 1), not listing metadata.
+- Exact-ID retrieval used `0001fd562caa1c25` with the title. Dense and hybrid returned this circular's page 1; hybrid-rerank returned the same circular and page. Semantic retrieval asked when the revocation takes effect. Dense, hybrid, and hybrid-rerank all answered **April 09, 2026** and cited circular ID `0001fd562caa1c25`, PDF page 1, with the supporting passage. The reranked result included the PDF's `NSE/CML/73562` and `0556/2026` text.
+- A bare-ID answer query did not provide enough question context and returned the explicit insufficient-evidence response. This confirms the answer path does not guess when the evidence/query is insufficient.
+- All live OpenAI embedding and GPT-4.1-mini requests used in validation succeeded. During ingestion, some embedding requests returned HTTP 429 and were retried successfully; there was no terminal API failure. Four Cohere rerank requests were run sequentially, with no concurrent reranking; all returned HTTP 200.
+- Added `data/index/` to `.gitignore` so the generated local Chroma database and BM25 corpus remain local and are not mistaken for source files.

@@ -12,6 +12,7 @@ wheels/
 # corpus and metadata
 data/pdfs/*.pdf
 data/metadata/*.json
+data/index/
 # mac crap
 .DS_Store
 .current
