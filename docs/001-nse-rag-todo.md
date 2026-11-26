@@ -34,6 +34,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T004 — Implement dense, hybrid and Cohere reranked retrieval
 
+- **Status:** COMPLETE — dense, RRF hybrid, and Cohere v5 Fast reranked modes use shared candidate/result limits over the local index pair; evidence is recorded in `docs/001-nse-rag.md`.
+
 - **Action:** Build selectable dense-only, BM25+dense RRF, and BM25+dense RRF+Cohere Rerank v5 Fast configurations over the same persisted corpus and shared candidate/top-k settings. Keep BM25 local; send only reranking candidate passages to Cohere.
 - **Files:** `src/nse_rag/retrieval.py`, `tests/test_retrieval.py`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R005, R012; P002, P006, P009, P011, P013
