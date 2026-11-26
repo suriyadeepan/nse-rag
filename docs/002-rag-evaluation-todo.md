@@ -47,6 +47,15 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 - **Acceptance:** The report contains measured Recall@5 and MRR by mode and query type, supported-answer count/sample by mode, and 2–3 sourceable real examples. All 20–30 queries were evaluated on the full baseline index in each mode, nine answers were manually grounded, and the journal separates implementation, automated test, and live verification evidence. No fabricated or inferred measurements are presented as results.
 - **Dependencies:** T001–T004.
 
+## T006 — Repair the default full-suite test invocation
+
+- **Status:** COMPLETE — configured pytest's script import path; the documented full-suite command now passes without an environment override.
+- **Action:** Make the documented full-suite command work from the repository root without an unrecorded environment override, by correcting the import or configuring pytest's script path. Keep this test-harness repair scoped to the existing downloader test setup.
+- **Files:** `pyproject.toml` and/or `tests/test_fetch_nse_circulars.py`, `README.md` if the supported command changes, and the implementation journal.
+- **Requirements / plan:** Project verification convention in `AGENTS.md` and `README.md`; related F002 verification constraint P018.
+- **Acceptance:** `uv run pytest -q` collects and passes the full suite from the repository root with no `PYTHONPATH` override; record the command and result.
+- **Dependencies:** None.
+
 ## Lineage coverage
 
 - R001–R005 → P002, P006, P008, P013, P015 → T002–T003 → evaluator opening persisted indexes with fixed settings; metric/config tests and full-index live evidence.
@@ -55,5 +64,6 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 - R008 → P004, P012, P016 → T004 → GPT-4.1-mini answer samples and manual passage-grounding classifications.
 - R009–R010 → P004–P005, P014–P018 → T003–T005 → report metrics/examples, journal evidence and final reconciliation.
 - R011–R012 → P006–P008, P018 → T002–T005 → scope constraint, no new dependency, prescribed `uv` checks and documented verification boundaries.
+- P018 plus the repository test convention in `AGENTS.md`/`README.md` → T006 → pytest script import-path configuration and default full-suite verification.
 
-All requirements R001–R012 and plan items P001–P018 are mapped above. Implementation, automated checks, full-index retrieval and manual answer grounding remain separate evidence categories.
+All requirements R001–R012 and plan items P001–P018 are mapped above. Implementation, automated checks, full-index retrieval and manual answer grounding remain separate evidence categories. T006 resolves the repository-level default test invocation issue found during convergence; it does not change the F002 retrieval or report results.

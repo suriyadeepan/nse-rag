@@ -107,3 +107,18 @@ Per-type means are saved in `eval/results.json`. In brief: dense exact-ID querie
 - `uv run pytest -q tests/test_eval_metrics.py tests/test_eval_data.py` — passed (9 tests; third-party deprecation warnings only).
 - Parsed `eval/results.json` and checked the three examples and aggregate values against the report; all matched. Confirmed 24 queries and 24 records for each mode, the full-index inventory, and fixed retrieval limits.
 - Manual grounding evidence is recorded in the report and T004 journal section; it is distinct from automated test evidence and live retrieval evidence.
+
+## Convergence review — 2026-11-26
+
+- F002 requirements, plan decisions and T001–T005 acceptance evidence were traced through the evaluator, tests, result artifact, report and journal. No F002 metric, source-label, full-index, answer-grounding or report discrepancy was found.
+- `uv run pytest -q` failed at collection for the pre-existing `tests/test_fetch_nse_circulars.py` import `from fetch_nse_circulars import ...`: that module is located under `scripts/` and is not importable from the default test path.
+- `PYTHONPATH=scripts uv run pytest -q` passed the complete suite (32 passed; third-party deprecation warnings only). The focused F002 suite also passed (9 passed).
+- Follow-up T006 is resolved below; it was a test invocation issue and did not affect the completed F002 live retrieval or grounding evidence.
+
+### T006 — Default full-suite test invocation
+
+- Configured pytest's `pythonpath` in `pyproject.toml` to include `scripts/`, allowing the existing downloader test to import `fetch_nse_circulars` using the documented repository test command.
+
+#### Verification
+
+- `uv run pytest -q` — passed (32 tests; third-party deprecation warnings only), from the repository root and with no `PYTHONPATH` override.
