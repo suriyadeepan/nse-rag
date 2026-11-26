@@ -1,94 +1,72 @@
-# F002 --- RAG Evaluation & Benchmarking
+# F002 — RAG Evaluation & Benchmarking (POC)
 
 ## Objective
 
-Build a labelled evaluation set and quantitatively compare dense, hybrid
-and reranked retrieval over the validated corpus of approximately 7,500
-PDFs.
+Compare dense, hybrid and reranked retrieval on the **full indexed NSE corpus** with a small labelled test set. Reuse F001's indexes and retrieval code; avoid building an evaluation framework.
+
+## Baseline
+
+- F001 indexed **7,591 of 7,614 PDFs** (36,853 chunks); 23 were skipped.
+- Reuse persisted Chroma and BM25 indexes. **No re-ingestion or re-embedding.**
+- Compare `dense`, `hybrid` (BM25 + dense + RRF), and `hybrid-rerank` (Cohere v5 Fast).
+- Keep F001 defaults fixed: 20 candidates, final top 5.
 
 ## Requirements
 
-### R001 --- Evaluation query set
+### R001 — Labelled queries
 
--   Create `eval.jsonl` with 30--50 manually labelled queries initially.
--   Sample across the corpus, dates, categories/departments and document
-    types.
--   Cover:
-    -   **Exact ID:** retrieve a known `circular_id`.
-    -   **Exact phrase/keyword:** find a specific rule or phrase.
-    -   **Semantic:** explain a regulatory requirement in natural
-        language.
-    -   **Multi-circular:** compare or trace a rule across multiple
-        circulars.
-    -   **Metadata-constrained:** retrieve within a
-        date/category/department filter where metadata supports it.
--   Include difficult cases: duplicate/superseded documents, ambiguous
-    wording, tables and poor extraction.
-
-Each record must contain: - `query` - `type` - `filters` (optional) -
-`expected_ids` (relevant circular IDs) - `expected_pages` (optional,
-actual PDF page numbers) - `expected_answer` or reference facts
+- Create `eval/eval.jsonl` with **20–30 manually verified queries**, drawn from documents in the index.
+- Cover **exact ID**, **keyword/phrase**, **semantic**, and **multi-circular** queries.
+- Prefer straightforward, source-verifiable examples. No metadata filters, OCR or supersession cases.
+- Required fields: `query`, `type`, `expected_ids`. Optional: `expected_answer`.
+- Verify IDs against source PDFs/metadata; do not confuse archive listing page with actual PDF page.
 
 Example:
 
-``` json
-{
-  "query": "Find circular 93c9fd2077d9f39b",
-  "type": "exact_id",
-  "filters": {},
-  "expected_ids": ["93c9fd2077d9f39b"],
-  "expected_pages": [1],
-  "expected_answer": "The document is a SEBI order concerning Akar Laminators Limited."
-}
+```json
+{"query": "When does the revocation of Gayatri Projects' trading suspension take effect?", "type": "semantic", "expected_ids": ["0001fd562caa1c25"], "expected_answer": "April 09, 2026"}
 ```
 
-The sample identifier and answer above are based on the supplied sample
-metadata/PDF; validate all labels against source documents. Have a
-second reviewer verify labels where practical.
+### R002 — Retrieval metrics
 
-### R002 --- Retrieval metrics
+- Run every query through all three modes against the **same full index**.
+- Compute **Recall@5** and **MRR** from expected circular IDs. Multiple chunks from the same PDF count as one document.
+- Report overall scores and a simple breakdown by query type.
+- Save per-query ranked IDs and metric values to `eval/results.json` or CSV.
+- Make Cohere rerank calls sequentially to respect trial limits.
 
-For each configuration calculate: - Recall@5: fraction of labelled
-relevant circulars found in the top 5. - MRR: reciprocal rank of the
-first relevant result. - Report macro-averages overall and by query
-type. - For multi-circular queries, count all expected relevant
-circulars in the recall denominator.
+### R003 — Answer grounding spot-check
 
-### R003 --- Answer quality
+- Generate answers for **5–10 representative queries** using the existing GPT-4.1-mini pipeline.
+- Manually classify each as **supported**, **unsupported**, or **insufficient evidence** based on cited passages.
+- Report counts; no LLM judge or automated claim-level validator.
 
--   Measure faithfulness against retrieved passages.
--   Use manual claim-level review or an LLM judge supplied with the
-    answer and retrieved evidence.
--   Report supported-claim rate and the number of unsupported answers.
--   Keep retrieval relevance separate from answer faithfulness.
+### R004 — Concise report
 
-### R004 --- Controlled comparison
+Produce a Markdown table:
 
-Compare: 1. Dense. 2. BM25 + dense + RRF. 3. BM25 + dense + RRF +
-reranking.
+| Metric | Dense | Hybrid | Hybrid + Rerank |
+|---|---:|---:|---:|
+| Recall@5 | TBD | TBD | TBD |
+| MRR | TBD | TBD | TBD |
+| Supported answers (sample) | TBD | TBD | TBD |
 
-Use identical queries, corpus snapshot, metadata filters, candidate
-limits and generation settings. Save raw ranked results and evaluation
-outputs.
-
-### R005 --- Benchmark report
-
-Publish:
-
-  Metric               Dense   Hybrid   Hybrid + Rerank
-  ------------------ ------- -------- -----------------
-  Recall@5               TBD      TBD               TBD
-  MRR                    TBD      TBD               TBD
-  Faithfulness (%)       TBD      TBD               TBD
-
-Break down retrieval metrics by exact-ID, keyword, semantic,
-multi-circular and metadata-constrained query types.
+Include query count, fixed retrieval settings and **2–3 real examples** of improvement, ties or failures. Report actual results even if hybrid/reranking performs worse.
 
 ## Acceptance criteria
 
--   At least 30 labelled queries, with category counts reported.
--   Every expected circular ID and page is verified against the source.
--   All configurations evaluated against identical test cases and corpus
-    snapshot.
--   Metrics reproducible from saved results.
--   No fabricated or selectively reported scores.
+- 20–30 source-verified queries tested against **all 7,591 indexed PDFs**, not a reduced corpus.
+- Identical queries, indexes and retrieval limits across all three modes.
+- Recall@5, MRR and per-query results saved.
+- 5–10 generated answers manually checked for grounding.
+- A short Markdown comparison report produced without fabricated scores.
+
+## Out of scope
+
+- Large evaluation datasets, multiple reviewers and significance testing.
+- Metadata-constrained queries, difficult extraction edge cases and exhaustive failure taxonomy.
+- LLM-as-judge pipelines, experiment platforms, dashboards and CI benchmarking.
+
+## Implementation principle
+
+Build **one small evaluation script** using existing F001 functions. Prioritize a working, reproducible comparison over infrastructure.
