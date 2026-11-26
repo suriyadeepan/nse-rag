@@ -65,8 +65,26 @@ def test_query_cli_selects_mode_limits_and_prints_page_citations(monkeypatch, ca
                 circular_id="NSE/CMTR/4",
                 page_number=3,
                 passage="Trading hours are extended.",
+                title="Trading Hours",
+                date="2026-01-01",
             )
         ]
+        claims = [
+            SimpleNamespace(
+                status=cli.ClaimStatus.SUPPORTED,
+                claim="Trading hours are extended.",
+                references=[
+                    SimpleNamespace(
+                        circular_id="NSE/CMTR/4",
+                        page_number=3,
+                        passage="Trading hours are extended.",
+                        title="Trading Hours",
+                        date="2026-01-01",
+                    )
+                ],
+            )
+        ]
+        validation_note = "Automated checks are an aid, not a guarantee."
 
     def fake_answer(question, nodes):
         calls["answer_question"] = question
@@ -85,8 +103,13 @@ def test_query_cli_selects_mode_limits_and_prints_page_citations(monkeypatch, ca
     assert calls["settings"].candidate_top_k == 12
     assert calls["settings"].top_k == 3
     assert calls["answer_question"] == "What changed?"
-    assert "Circular ID: NSE/CMTR/4 | PDF page: 3" in output
+    assert "Circular ID: NSE/CMTR/4 | Title: Trading Hours" in output
+    assert "Date: 2026-01-01 | PDF page: 3" in output
     assert "Trading hours are extended." in output
+    assert "Title: Trading Hours" in output
+    assert "Date: 2026-01-01" in output
+    assert "[Supported] Trading hours are extended." in output
+    assert "Automated checks are an aid, not a guarantee." in output
 
 
 def test_cli_help_lists_ingest_and_query(capsys):

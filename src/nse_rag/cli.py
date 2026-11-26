@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 from typing import Sequence
 
-from nse_rag.answer import answer_from_passages
+from nse_rag.answer import ClaimStatus, answer_from_passages
 from nse_rag.index_store import (
     DEFAULT_INDEX_DIR,
     DEFAULT_METADATA_DIR,
@@ -90,10 +90,29 @@ def _query(args: argparse.Namespace) -> None:
     print(f"Question: {question}\n")
     print(answer.answer)
     for reference in answer.references:
+        details = []
+        if reference.title:
+            details.append(f"Title: {reference.title}")
+        if reference.date:
+            details.append(f"Date: {reference.date}")
+        details_text = f" | {' | '.join(details)}" if details else ""
         print(
-            f"\n[{reference.source_id}] Circular ID: {reference.circular_id} "
-            f"| PDF page: {reference.page_number}\n{reference.passage}"
+            f"\n[{reference.source_id}] Circular ID: {reference.circular_id}"
+            f"{details_text} | PDF page: {reference.page_number}\n{reference.passage}"
         )
+    if answer.claims:
+        print(f"\nClaim checks ({answer.validation_note})")
+        for claim in answer.claims:
+            print(f"\n[{claim.status.value}] {claim.claim}")
+            if not claim.references:
+                print("  Evidence: no citation could be mapped; review required.")
+            for reference in claim.references:
+                title = f" | Title: {reference.title}" if reference.title else ""
+                date = f" | Date: {reference.date}" if reference.date else ""
+                print(
+                    f"  Evidence: Circular ID: {reference.circular_id}{title}{date}"
+                    f" | PDF page: {reference.page_number}\n  {reference.passage}"
+                )
     if answer.insufficient_evidence:
         LOGGER.info("No supported answer found in retrieved passages")
 
