@@ -1,4 +1,4 @@
-# F002 — RAG Evaluation & Benchmarking (POC)
+# F002 — RAG Evaluation & Benchmarking
 
 ## Objective
 
