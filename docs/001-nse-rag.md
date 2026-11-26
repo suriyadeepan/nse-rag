@@ -39,3 +39,15 @@
 - `uv run pytest -q tests/test_retrieval.py` passed (4 tests). The tests cover all modes and shared limits, RRF overlap ranking, Cohere v5 Fast wiring and candidate-only reranking, and rejection of hybrid queries without BM25.
 - `PYTHONPATH=scripts uv run pytest -q` passed (16 tests). Tests use a local temporary Chroma collection and mock embeddings/reranker; no external API calls were made.
 - The local corpus is present (7,614 PDFs and 7,612 JSON files), but full-corpus ingestion and live queries remain outstanding for T008.
+
+## API configuration note
+
+- The user has configured OpenAI and Cohere trial API keys in the local `.env`; secret values are not recorded here. `.env` is ignored by Git and must remain untracked.
+- Keep Cohere usage within the active trial account's rate limits during live validation. Use small, sequential rerank checks and avoid concurrent or repeated requests; verify observed limits in the Cohere account before increasing request volume.
+
+## T005 — Grounded answers and citations
+
+- Added `src/nse_rag/answer.py` with GPT-4.1-mini answer generation from only the supplied retrieved passages and their indexed circular ID/actual `page_number`. It never reads the metadata listing `page` field.
+- Prompt requires `[S#]` evidence citations and an `INSUFFICIENT_EVIDENCE` marker where the passages do not support an answer. Returned references include circular ID, actual PDF page and passage; references are included only when cited by a valid source tag. Missing/invalid citation tags or unusable page metadata produce an explicit insufficient-evidence response.
+- The LlamaIndex OpenAI adapter reads `OPENAI_API_KEY`; this implementation and its tests do not make live API calls. Credentials and external usage remain for end-to-end validation.
+- `uv run pytest -q tests/test_answer.py` passed (4 tests). `PYTHONPATH=scripts uv run pytest -q` passed (20 tests; 6 dependency deprecation warnings). Coverage verifies prompt evidence bounds, actual PDF page citation rather than listing page, full source references, explicit insufficiency and rejection of unknown/missing citation tags.

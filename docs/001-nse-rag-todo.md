@@ -44,6 +44,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T005 — Implement grounded answers and citations
 
+- **Status:** COMPLETE — GPT-4.1-mini passage-only answer generation, validated source references and explicit insufficient-evidence handling are implemented and covered by tests; evidence is recorded in `docs/001-nse-rag.md`.
+
 - **Action:** Add GPT-4.1-mini answer generation using retrieved passages only; return circular ID, actual PDF page number and supporting passage, and report insufficient evidence without guessing.
 - **Files:** `src/nse_rag/answer.py`, `tests/test_answer.py`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R013; P003, P011, P014
