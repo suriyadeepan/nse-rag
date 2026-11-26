@@ -1,73 +1,77 @@
-# F003 --- Performance, Cost & Failure Analysis
+# F003 — Performance, Cost & Failure Analysis
 
 ## Objective
 
-Measure retrieval trade-offs at the scale of the existing approximately
-7,500-PDF corpus and identify important failure modes.
+Measure practical latency and API cost for the three retrieval modes on the **full F001 corpus** (7,591 indexed PDFs; 36,853 chunks), then document a few meaningful failures observed in F002. Reuse existing code and results.
 
 ## Requirements
 
-### R001 --- Latency measurement
+### R001 — Lightweight latency benchmark
 
--   Benchmark all three configurations: Dense, Hybrid and Hybrid +
-    Rerank.
--   Run at least 30 measured repetitions per query/configuration after
-    warm-up; report the number of queries and runs.
--   Measure retrieval, reranking, generation and end-to-end latency
-    separately.
--   Report p50 and p95 latency.
--   Record hardware, concurrency, cache state, candidate limits and
-    model/provider versions.
--   Separate cold-start/index-loading latency from warm query latency.
+- Benchmark `dense`, `hybrid`, and `hybrid-rerank` using the same persisted F001 indexes and F002 query set.
+- Use **10 representative queries** (mix exact-ID, keyword and semantic) from `eval/eval.jsonl`.
+- Run one warm-up and **3 measured repetitions per query/mode**. Run sequentially and respect Cohere's trial rate limit.
+- Measure retrieval latency. For `hybrid-rerank`, include the Cohere rerank call in retrieval time.
+- Measure GPT-4.1-mini answer latency separately for the same small sample only if straightforward to capture.
+- Report average and p50 latency. Skip p95, concurrency testing, cold-start analysis and hardware profiling.
+- Record basic context: corpus/index counts, candidate top-k, final top-k, model names and run date.
 
-### R002 --- Cost measurement
+### R002 — Simple cost estimate
 
-Calculate: - Query embedding cost using actual token usage and provider
-pricing. - Reranking cost using actual billed units and provider
-pricing. - LLM input/output cost using actual token usage and provider
-pricing. - Total variable cost per query. - One-time corpus
-ingestion/embedding cost separately. - Estimated amortized ingestion
-cost per query at stated query volumes.
+- Reuse F001's recorded corpus embedding estimate: approximately **$0.24 USD** for 36,853 chunks / 11.8M input tokens. Label it an estimate, not account billing.
+- For a small sample of answer queries, record OpenAI input/output token usage and estimate GPT-4.1-mini cost using provider pricing checked on the run date.
+- Record Cohere rerank usage/cost for the benchmark if the API response or account usage makes it available. If unavailable, state that clearly rather than inventing a figure.
+- Report approximate variable cost per evaluated query where usage data supports it.
+- Keep corpus ingestion cost separate from query-time cost. No amortization model or cost dashboard.
 
-Do not estimate reranking cost from document count unless that matches
-the provider's billing model. Record price date and currency.
+### R003 — Short failure analysis
 
-### R003 --- Failure analysis
+Create `failure-analysis.md` with **at least three observed examples** from F002 or the F003 benchmark.
 
-Create `failure-analysis.md`.
+Prioritize:
+- Dense retrieval missing an exact circular ID that hybrid retrieves.
+- Reranking lowering the rank of a relevant semantic result (e.g. F002 query 14).
+- Cohere rate-limit response (HTTP 429) and the successful sequential retry.
 
-Investigate: - Exact circular ID not retrieved. - Metadata/PDF mismatch
-or missing metadata. - Duplicate or superseded circular returned instead
-of the applicable version. - Ambiguous references and multi-circular
-omissions. - Tables, scanned pages or structured content extracted
-incorrectly. - PDF page attribution or citation errors. - Correct
-retrieval but incorrect or unsupported generated answer. - BM25/vector
-corpus-version mismatch or stale index.
+For each example, record only:
+- Query or operation.
+- Expected and actual result.
+- What failed and likely cause, if known.
+- Practical fix or limitation.
 
-For each failure record: - Query and query type. - Expected and actual
-circular IDs/pages. - Observed failure. - Root cause and evidence. -
-Proposed fix and regression test.
+Add other failures only if encountered during this. Do not perform an exhaustive corpus audit or invent root causes without evidence.
 
-### R004 --- Consolidated benchmark
+### R004 — Compact comparison
 
-Publish:
+Publish a small table for the three modes:
 
-  Metric               Dense   Hybrid   Hybrid + Rerank
-  ------------------ ------- -------- -----------------
-  Recall@5               TBD      TBD               TBD
-  MRR                    TBD      TBD               TBD
-  Faithfulness (%)       TBD      TBD               TBD
-  p50 latency (ms)       TBD      TBD               TBD
-  p95 latency (ms)       TBD      TBD               TBD
-  Cost/query             TBD      TBD               TBD
+| Metric | Dense | Hybrid | Hybrid + Rerank |
+|---|---:|---:|---:|
+| Recall@5 | Use F002 | Use F002 | Use F002 |
+| MRR@5 | Use F002 | Use F002 | Use F002 |
+| Retrieval latency — average | TBD | TBD | TBD |
+| Retrieval latency — p50 | TBD | TBD | TBD |
+| Approx. query cost | TBD | TBD | TBD |
 
-Also report corpus size, chunk count, index size, ingestion duration and
-failure counts.
+Include corpus size, benchmark query count, run count and the separate one-time embedding estimate. Reuse F002 retrieval scores; do not rerun the full evaluation just to reproduce them.
 
 ## Acceptance criteria
 
--   Latency and cost reported for all configurations under documented
-    conditions.
--   At least three representative failures documented with root causes.
--   Costs use measured token/usage data and dated provider prices.
--   Comparisons use actual measurements and the same corpus snapshot.
+- All three modes measured on the same full persisted corpus.
+- Latency measured with the same queries and retrieval limits.
+- Cost figures are traceable to token/usage data and dated provider pricing; unavailable usage is explicitly marked.
+- At least three real failure examples documented without speculative root causes.
+- A concise comparison report is saved and matches the recorded measurements.
+
+## Out of scope
+
+- Production load or concurrency tests.
+- Extensive repeated-run statistical benchmarking or p95 guarantees.
+- Cold-start infrastructure profiling.
+- Detailed cost forecasting or amortization models.
+- Exhaustive failure taxonomy, corpus audit or automated root-cause analysis.
+- Dashboards, monitoring or production performance infrastructure.
+
+## Implementation principle
+
+Reuse F001 indexes, F002 queries, metrics and answer code. Measure a small representative sample, record what the evidence supports, and stop.
