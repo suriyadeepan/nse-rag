@@ -40,7 +40,7 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 
 ## T005 — Report results and reconcile evidence
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETE — report reconciled against saved retrieval results and grounding evidence; verification recorded in the implementation journal.
 - **Action:** Produce a concise report with the requested comparison table, query count, fixed retrieval settings, grounding counts and two or three actual examples of improvement, ties or failures. Reconcile requirement → plan → task → implementation → automated/live evidence and record commands, outcomes, failures and limitations in the journal.
 - **Files:** `eval/report.md`, `docs/002-rag-evaluation-benchmarking.md`, `docs/002-rag-evaluation-todo.md`
 - **Requirements / plan:** R009–R010; P005, P017–P018

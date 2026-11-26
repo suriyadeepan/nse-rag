@@ -73,7 +73,7 @@
 | Hybrid | 0.7083 | 0.5708 |
 | Hybrid + Rerank | 0.7292 | 0.7153 |
 
-Per-type means are saved in `eval/results.json`. In brief: dense exact-ID queries scored 0.0000 Recall@5 / 0.0000 MRR, while hybrid and hybrid-rerank scored 1.0000 Recall@5; reranking improved exact-ID MRR to 1.0000. On semantic queries, reranking scored 0.5000 Recall@5 / 0.4167 MRR, below dense and hybrid (both 0.6667 Recall@5; MRR 0.4583 and 0.6667 respectively). T004/T005 will select final report examples and perform answer-grounding checks.
+Per-type means are saved in `eval/results.json`. In brief: dense exact-ID queries scored 0.0000 Recall@5 / 0.0000 MRR, while hybrid and hybrid-rerank scored 1.0000 Recall@5; reranking improved exact-ID MRR to 1.0000. On semantic queries, reranking scored 0.5000 Recall@5 / 0.4167 MRR, below dense and hybrid (both 0.6667 Recall@5; MRR 0.4583 and 0.6667 respectively). Final report examples and answer-grounding checks are recorded below and in `eval/report.md`.
 
 #### Verification
 
@@ -94,3 +94,16 @@ Per-type means are saved in `eval/results.json`. In brief: dense exact-ID querie
 
 - `uv run --env-file .env python -` — opened existing local indexes, retrieved the nine selected query/mode passage sets, and generated each answer using the existing GPT-4.1-mini answer path; completed successfully.
 - Manual review — all nine answer citations were inspected against their cited passage content and PDF page metadata. No LLM judge or automated claim-level validator was used.
+
+### T005 — Report and evidence reconciliation
+
+- Completed `eval/report.md` with overall and per-type Recall@5/MRR, full-index size, fixed 20-candidate/top-five settings, and 3/3 supported-answer counts per mode. It includes three examples checked against `eval/results.json`: exact-ID recovery, the semantic rerank miss on query 14, and the multi-circular query 19 ranking comparison.
+- Reconciled the report with the saved result artifact: 24 queries appear in each of the three modes; results record 36,853 nodes, 7,591 source PDF paths and 7,591 distinct circular IDs. The reported query-type aggregates and examples agree with the saved per-query data.
+- The answer-grounding table covers nine manually reviewed answers (three per mode). All nine were supported by their cited passages; unsupported and insufficient-evidence counts are zero. The report discloses that the same cases were generated a second time after truncated console output, for 18 completions total, while only the final nine were classified.
+- No new implementation or architecture decision was needed. The Cohere first-attempt HTTP 429 and paced successful rerun, as well as the duplicated answer-generation execution, remain documented as actual failures/limitations.
+
+#### Verification
+
+- `uv run pytest -q tests/test_eval_metrics.py tests/test_eval_data.py` — passed (9 tests; third-party deprecation warnings only).
+- Parsed `eval/results.json` and checked the three examples and aggregate values against the report; all matched. Confirmed 24 queries and 24 records for each mode, the full-index inventory, and fixed retrieval limits.
+- Manual grounding evidence is recorded in the report and T004 journal section; it is distinct from automated test evidence and live retrieval evidence.
