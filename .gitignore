@@ -14,3 +14,4 @@ data/pdfs/*.pdf
 data/metadata/*.json
 # mac crap
 .DS_Store
+.current
