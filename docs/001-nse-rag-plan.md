@@ -34,7 +34,7 @@ Python 3.15 dependency resolution failed: `chromadb` depends on `onnxruntime>=1.
 - **P007** Full-corpus extraction/embedding may be slow or memory-heavy: process sorted paths and bounded batches, report progress/failures, and avoid holding PDF page objects/text beyond need. [R006–R011]
 - **P008** Metadata can misdescribe files or contain bad paths: use it only as descriptive input, fall back to PDF stem, preserve actual PDF page numbers, and spot-check extracted identity. [R003–R004, R009–R010]
 - **P009** BM25 is in-memory while Chroma is persisted: persist/reconstruct the matching text nodes for querying, and ensure a fresh ingestion creates a single coherent run. [R011–R012]
-- **P010** Runtime 3.15 and third-party/native package support are unverified: resolve with `uv` and imports before finalizing dependency choices; record any required runtime adjustment as a plan decision. [R005]
+- **P010** Python 3.15 is unsupported by the resolved ChromaDB/ONNX Runtime dependency set on this host; CPython 3.14 is selected and verified with `uv` resolution, installation, and imports. [R005]
 - **P011** OpenAI and Cohere APIs add usage cost, credential needs and external data transfer for embedding, answer generation and reranking. The user approved both services; keep corpus, Chroma and BM25 data local. [R005, R012–R014]
 
 ## Acceptance and validation

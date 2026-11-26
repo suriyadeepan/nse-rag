@@ -14,6 +14,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T002 — Implement deterministic metadata loading and PDF extraction
 
+- **Status:** COMPLETE — deterministic metadata matching, page-aware streaming extraction/chunking, and focused tests are implemented; evidence is recorded in `docs/001-nse-rag.md`.
+
 - **Action:** Add a small ingestion module that loads one-object metadata JSON files (excluding the aggregate), matches PDFs by local path then ID/stem, falls back to the filename stem, sorts local PDF paths, extracts page text with PyMuPDF, skips/logs malformed, missing, unreadable and textless inputs, chunks pages with `SentenceSplitter` (500/50), and attaches searchable identity plus required metadata and real 1-based page numbers.
 - **Files:** `src/nse_rag/ingest.py`, `src/nse_rag/__init__.py`, `tests/test_ingest.py`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R001–R004, R006–R010; P001, P007–P008
