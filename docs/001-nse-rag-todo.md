@@ -54,6 +54,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T006 — Add CLI and reproducible local usage documentation
 
+- **Status:** COMPLETE — full-corpus `ingest` and selectable `query` commands, setup template and local usage documentation are implemented; CLI tests and help smoke checks are recorded in `docs/001-nse-rag.md`.
+
 - **Action:** Wire one-command full-corpus ingestion and query commands into the existing CLI; document local setup, environment variables, index paths, retrieval modes and commands.
 - **Files:** `src/nse_rag/__init__.py`, `src/nse_rag/cli.py`, `pyproject.toml`, `README.md`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R005–R008, R014, R016; P003–P006, P012
