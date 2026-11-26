@@ -4,7 +4,7 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 
 ## T001 — Create and verify the labelled query set
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETE — 24 balanced, source-verified records and JSONL validation test; evidence in `docs/002-rag-evaluation-benchmarking.md`.
 - **Action:** Create 24 source-verifiable queries in `eval/eval.jsonl`, balanced across exact-ID, keyword/phrase, semantic and multi-circular types. Check required fields, expected circular IDs and source PDF identity/content; record source evidence for each label. Do not rely on archive listing pages as PDF pages.
 - **Files:** `eval/eval.jsonl`, `tests/test_eval_data.py`, `docs/002-rag-evaluation-benchmarking.md`
 - **Requirements / plan:** R006, R010.1; P001, P009, P014
