@@ -52,6 +52,18 @@ Modes are `dense`, `hybrid` (local BM25 + dense retrieval with reciprocal rank f
 
 Answers use GPT-4.1-mini and display cited circular IDs, actual 1-based PDF page numbers, and supporting passages. If retrieved evidence is insufficient or cannot be cited, the CLI says so rather than guessing. The listing metadata `page` field is never used as a PDF page citation.
 
+## Retrieval evaluation
+
+We compared dense, hybrid (BM25 + dense with reciprocal rank fusion), and hybrid with Cohere reranking on the persisted full index: 7,591 PDFs and 36,853 chunks. The same 24 source-verified queries and retrieval limits (20 candidates, top 5) were used for each mode. Scores are document-level; duplicate chunks from one circular count once.
+
+| Metric | Dense | Hybrid | Hybrid + Rerank |
+|---|---:|---:|---:|
+| Recall@5 | 0.4375 | 0.7083 | 0.7292 |
+| MRR | 0.4063 | 0.5708 | 0.7153 |
+| Supported answers (sample) | 3/3 | 3/3 | 3/3 |
+
+Nine GPT-4.1-mini answers (three per mode) were manually checked against cited passages; all nine were supported. Reranking improved the overall scores, though semantic-query Recall@5 fell to 0.5000, below dense and hybrid (both 0.6667). See the [full report](eval/report.md) for query-type breakdowns, examples, and per-answer evidence; [ranked results](eval/results.json) contain per-query IDs and metrics.
+
 ## Development checks
 
 ```bash
