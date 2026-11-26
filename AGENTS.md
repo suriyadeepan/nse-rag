@@ -15,7 +15,7 @@
 
 - **Testing:** Maintain unit, integration and deployment smoke tests. Track implementation, automated testing and real-world verification separately. Use prescribed environments (`uv` for Python). Convert repeatable manual checks/fixes into regression tests. Record commands, results and evidence in the journal. Never claim unverified success.
 
-- **Git:** Inspect `git status` before each top-level TODO, not nested items. If dirty, inspect and ask how to proceed. Never silently carry, overwrite or discard changes. Stage only task-related files; review staged diffs and run `git diff --cached --check`. Auto-commit only when TODO items are completed, only after all relevant tests and verification pass.
+- **Git:** Check `git status` before each top-level TODO. If dirty, inspect and ask how to proceed. Never silently carry, overwrite or discard changes. Stage only task-related files; review staged diffs and run `git diff --cached --check`. Commit completed TODOs after all relevant tests and verification pass; push each commit to the feature branch's remote. Never force-push without approval.
 
 - **Efficiency:** Minimize tokens/tool calls. Read only relevant files. Keep responses concise.
 
