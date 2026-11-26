@@ -79,3 +79,23 @@
 - A bare-ID answer query did not provide enough question context and returned the explicit insufficient-evidence response. This confirms the answer path does not guess when the evidence/query is insufficient.
 - All live OpenAI embedding and GPT-4.1-mini requests used in validation succeeded. During ingestion, some embedding requests returned HTTP 429 and were retried successfully; there was no terminal API failure. Four Cohere rerank requests were run sequentially, with no concurrent reranking; all returned HTTP 200.
 - Added `data/index/` to `.gitignore` so the generated local Chroma database and BM25 corpus remain local and are not mistaken for source files.
+
+## T009 — Requirement and plan evidence reconciliation
+
+The trace below was checked against the implementation in `src/nse_rag/`, automated tests in `tests/`, and the recorded local/live checks above. Automated tests and real-provider/full-corpus validation are distinct evidence; passing mocks does not imply a live service check.
+
+| Requirements | Plan | Implementation | Automated evidence | Local/live evidence |
+|---|---|---|---|---|
+| R001–R004, R006–R010 (metadata, PDF extraction, page-aware chunks, skips) | P001, P007–P008, P012, P015 | `ingest.py` | `test_ingest.py`; full suite at T007 | T008: 7,614 discovered; identity/title spot-check; actual PDF page 1 cited |
+| R005, R011 (selected stack, local dense/BM25 indexes) | P001–P002, P005–P010, P015 | `index_store.py`, `pyproject.toml`, `uv.lock` | `test_compatibility.py`, `test_index_store.py`; T001 import/sync checks | T007 local Chroma reopen and node-set parity; T008 full build persisted 36,853 chunks |
+| R005, R012 (dense, RRF hybrid, Cohere rerank) | P002, P006, P009, P011, P013 | `retrieval.py` | `test_retrieval.py` | T008 exact-ID and semantic queries in all three modes; four sequential Cohere requests returned HTTP 200 |
+| R013 (grounded answers and actual-page references) | P003, P014–P015 | `answer.py`, `cli.py` | `test_answer.py`, `test_cli.py` | T008 semantic answers cited circular ID and PDF page 1; bare-ID query returned insufficient evidence |
+| R014, R016 (documented end-to-end POC and inspectable results) | P004, P012–P015 | `cli.py`, `README.md`, `docs/tutorial-001-nse-rag.md` | `test_cli.py`; T007 CLI help smoke | T008 full-corpus ingestion and live query checks |
+
+**Verification categories:** Implementation is present for all listed requirement groups. Automated verification: T007 reports 23 tests passed under `uv`; T001 reports locked dependency sync and integration imports. Local deployment smoke: T007 reports CLI help and Chroma/BM25 persistence/reopen. Full-corpus/live API verification: T008 reports 7,591 indexed documents, 23 skipped, three retrieval modes, OpenAI answers/embeddings, and sequential Cohere requests. These results are recorded separately and are not inferred from unit tests.
+
+For this reconciliation, `PYTHONPATH=scripts uv run pytest -q` passed again (23 passed, 6 dependency deprecation warnings). The default `uv run pytest -q` invocation failed during collection because `fetch_nse_circulars` is imported from the existing `scripts/` directory, which is not on the default import path; using the repository's documented `PYTHONPATH=scripts` resolves collection. No test code or application code changed.
+
+**Remaining limits:** No OCR; 23 textless/unusable PDFs were skipped and logged. Identity validation was a spot-check, not an exhaustive metadata audit. Embedding cost is an estimate ($0.24), not account billing. These match the POC scope; no unverified acceptance claim is made.
+
+README review: setup, local paths, ingestion/query commands, modes, citations and test instructions match the CLI and implementation. Added `docs/tutorial-001-nse-rag.md` for the completed feature, consistent with the documentation convention. No README change was needed.

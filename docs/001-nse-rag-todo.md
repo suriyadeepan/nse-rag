@@ -84,8 +84,10 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T009 — Reconcile lineage and completion evidence
 
+- **Status:** COMPLETE — requirement/plan coverage was reconciled against implementation, automated tests, local smoke checks and T008 live validation; the journal records the evidence boundary and the completion tutorial is available at `docs/tutorial-001-nse-rag.md`.
+
 - **Action:** Verify every applicable requirement and plan item maps through implementation to automated tests or explicit live validation; record completion evidence and any remaining limitation in the journal, then confirm README/tutorial expectations.
-- **Files:** `docs/001-nse-rag-todo.md`, `docs/001-nse-rag.md`, `README.md`
+- **Files:** `docs/001-nse-rag-todo.md`, `docs/001-nse-rag.md`, `README.md`, `docs/tutorial-001-nse-rag.md`
 - **Requirements / plan:** R001–R014, R016; P001–P015
 - **Acceptance:** No broken R→P→T→implementation→test/live-validation links remain; implementation, automated tests, deployment smoke checks and full-corpus/live API verification are reported separately. Create the user-facing tutorial only upon feature completion per project instructions.
 - **Dependencies:** T001–T008.
