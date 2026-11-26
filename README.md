@@ -54,15 +54,20 @@ Answers use GPT-4.1-mini and display cited circular IDs, actual 1-based PDF page
 
 ## Retrieval evaluation
 
-We compared dense, hybrid (BM25 + dense with reciprocal rank fusion), and hybrid with Cohere reranking on the persisted full index: 7,591 PDFs and 36,853 chunks. The same 24 source-verified queries and retrieval limits (20 candidates, top 5) were used for each mode. Scores are document-level; duplicate chunks from one circular count once.
+We compared dense, hybrid (BM25 + dense with reciprocal rank fusion), and hybrid with Cohere reranking on the persisted full index: 7,591 PDFs and 36,853 chunks. F002 used the same 24 source-verified queries and retrieval limits (20 candidates, top 5) for each mode. Scores are document-level; duplicate chunks from one circular count once. F003 measured latency separately using 10 representative queries (2 exact-ID, 4 keyword/phrase, 4 semantic), with one warm-up and three measured repetitions per query/mode.
 
 | Metric | Dense | Hybrid | Hybrid + Rerank |
 |---|---:|---:|---:|
 | Recall@5 | 0.4375 | 0.7083 | 0.7292 |
 | MRR | 0.4063 | 0.5708 | 0.7153 |
 | Supported answers (sample) | 3/3 | 3/3 | 3/3 |
+| Retrieval latency — average (F003) | 0.769 s | 0.698 s | 1.464 s |
+| Retrieval latency — p50 (F003) | 0.516 s | 0.521 s | 1.275 s |
+| Approx. query cost | ~$0.0000004* | ~$0.0000004* | ~$0.0000004*; Cohere unavailable |
 
-Nine GPT-4.1-mini answers (three per mode) were manually checked against cited passages; all nine were supported. Reranking improved the overall scores, though semantic-query Recall@5 fell to 0.5000, below dense and hybrid (both 0.6667). See the [full report](eval/report.md) for query-type breakdowns, examples, and per-answer evidence; [ranked results](eval/results.json) contain per-query IDs and metrics.
+Nine GPT-4.1-mini answers (three per mode) were manually checked against cited passages; all nine were supported. The separate F003 answer sample used hybrid retrieval: five answers averaged 1.863 s and cost $0.0032728 total (about $0.000655 per sampled answer, or $0.000656 including one estimated query embedding). The `~$0.0000004` table estimates are query-embedding cost only, not account usage; Cohere usage was unavailable. F001's one-time full-corpus embedding cost remains an approximately $0.24 estimate and was not incurred again. OpenAI prices were checked on 2026-11-26.
+
+Reranking improved the overall scores, though semantic-query Recall@5 fell to 0.5000, below dense and hybrid (both 0.6667). See the [F002 evaluation report](eval/report.md) for query-type breakdowns and answer evidence; [ranked results](eval/results.json) contain per-query IDs and metrics. See the [F003 performance report](eval/performance-report.md), [raw measurements](eval/performance-results.json), and [failure analysis](eval/failure-analysis.md) for benchmark details and limitations.
 
 ## Development checks
 
