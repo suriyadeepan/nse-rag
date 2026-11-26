@@ -13,7 +13,7 @@ Canonical task and status source for F002. Mark tasks complete only when accepta
 
 ## T002 — Implement the compact evaluator and metric tests
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETE — compact evaluator and metric tests implemented; evidence in `docs/002-rag-evaluation-benchmarking.md`.
 - **Action:** Add one script that opens the existing local indexes, runs each labelled query through dense, hybrid and hybrid-rerank with F001's 20-candidate/top-five settings, deduplicates ranked chunks by circular ID, and computes per-query Recall@5/MRR plus overall and per-type aggregates. Persist ranked IDs and metrics as JSON. Do not ingest or embed.
 - **Files:** `scripts/evaluate_rag.py`, `eval/results.json`, `tests/test_eval_metrics.py`, `docs/002-rag-evaluation-benchmarking.md`
 - **Requirements / plan:** R002–R005, R007, R010.2–R010.3, R012; P002–P003, P006–P008, P010, P015

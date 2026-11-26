@@ -43,3 +43,17 @@
 - `uv run pytest -q tests/test_eval_data.py` — passed (1 test).
 - Implementation evidence: 24 JSONL records inspected against indexed source identity and actual source PDF page text as listed above.
 - Retrieval, full-index comparison, and answer-grounding verification are outside T001 and remain pending their linked tasks.
+
+### T002 — Compact evaluator and metrics
+
+- Added `scripts/evaluate_rag.py`. It loads the labelled JSONL, opens the existing local indexes through `open_local_indexes`, and uses F001's `retrieve` with fixed `RetrievalSettings(candidate_top_k=20, top_k=5)`.
+- Each query runs sequentially through dense, hybrid, and hybrid-rerank. This keeps Cohere calls serialized. The evaluator saves the first-ranked unique circular IDs used for metrics, the raw circular IDs from returned chunks, and each query's Recall@5 and MRR. It also computes overall and per-type arithmetic means.
+- The script counts persisted nodes, distinct `pdf_path` values, and circular IDs. It stops before retrieval if the node count or unique source-PDF path count differs from the F001 baseline (36,853 / 7,591). It never invokes ingestion; `eval/results.json` is written only after a complete run and remains for T003, when the real full-index evaluation is run.
+- Added `tests/test_eval_metrics.py` for duplicate-chunk collapse, multiple expected IDs, reciprocal rank, Recall@5 cutoff, overall/type aggregation, sequential identical-mode settings, inventory counts, baseline mismatch handling, and JSON serialization.
+
+#### Verification
+
+- `uv run pytest -q tests/test_eval_metrics.py tests/test_eval_data.py` — passed (8 tests; third-party deprecation warnings only).
+- `uv run python scripts/evaluate_rag.py --help` — passed; confirms the CLI loads without contacting retrieval services.
+- `git diff --check` — passed.
+- The evaluator was not run against the live index in this task, so no retrieval scores or `eval/results.json` are claimed. Full-index retrieval and Cohere behavior remain T003 verification.
