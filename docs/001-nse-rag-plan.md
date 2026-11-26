@@ -16,14 +16,18 @@
 
 | Area | Status | Evidence / verification |
 |---|---|---|
-| Python runtime | VERIFIED (configured), UNKNOWN (ecosystem support) | `.python-version` and `pyproject.toml` require 3.15; resolve/install chosen packages under `uv` before implementation is considered compatible. |
-| CPU architecture | UNKNOWN | Host architecture is not specified in project configuration; check current host and native wheel availability for PyMuPDF/Chroma dependencies. |
-| Native dependencies | UNKNOWN | PyMuPDF and Chroma native components need compatible wheels; verify installation/imports with `uv`. |
+| Python runtime | DECIDED: CPython 3.14 | Initial resolution under 3.15 failed because ChromaDB requires `onnxruntime`, which has no CPython 3.15 wheel. Resolver listed CPython 3.14 wheels. The POC pins 3.14 in `.python-version` and accepts `>=3.14` in `pyproject.toml`. |
+| CPU architecture | VERIFIED: arm64 Apple Silicon | Host reports `arm64 Darwin`; package resolution and installation will verify wheel availability on this architecture. |
+| Native dependencies | VERIFIED | ChromaDB/onnxruntime and PyMuPDF installed and imported successfully under CPython 3.14. |
 | Container format | UNKNOWN / not specified | No container definition found; POC is local CLI and does not require a container. |
 | Deployment target | VERIFIED (scope) | Local developer machine: local corpus and persistent local Chroma are required; no hosted database. |
 | External services | VERIFIED (decision) | The user confirmed paid OpenAI API use and Cohere Rerank v5 Fast. API credentials/network access are needed; embedding text goes to OpenAI, and candidate passages go to Cohere during reranking. |
 
 Automated compatibility checks: `uv lock`/`uv sync`, import smoke checks for chosen integrations, and focused tests for local configuration and persisted-store reopening. Full live acceptance needs the local corpus plus OpenAI and Cohere API credentials and network access.
+
+### T001 runtime decision
+
+Python 3.15 dependency resolution failed: `chromadb` depends on `onnxruntime>=1.14.1`, and the resolver found no matching CPython 3.15 wheel (available tags included CPython 3.14). CPython 3.14 was selected and verified with a successful lock, sync, integration import smoke check and focused test. This is a compatibility adjustment, not a change to the local-only architecture.
 
 ## Risks and mitigations
 

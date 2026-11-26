@@ -4,6 +4,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T001 — Confirm runtime and dependency compatibility
 
+- **Status:** COMPLETE — `uv lock --check`, `uv sync --locked`, and integration imports passed under CPython 3.14.10 on arm64; runtime decision and resolved versions are recorded in `docs/001-nse-rag.md`.
+
 - **Action:** Resolve the selected LlamaIndex, PyMuPDF, ChromaDB, OpenAI, Cohere and BM25/RRF integrations under the configured Python runtime. Check host architecture/native wheels; record a plan decision before changing the runtime if Python 3.15 is unsupported.
 - **Files:** `pyproject.toml`, `uv.lock`, `docs/001-nse-rag-plan.md`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R005; P005–P006, P010
