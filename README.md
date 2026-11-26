@@ -50,7 +50,7 @@ uv run --env-file .env nse-rag query "Which trading requirements changed?" --mod
 
 Modes are `dense`, `hybrid` (local BM25 + dense retrieval with reciprocal rank fusion), and `hybrid-rerank` (hybrid followed by one Cohere rerank request). All use the same defaults: 20 candidates and 5 final passages. Adjust them with `--candidate-top-k` and `--top-k`; the candidate limit must be at least the result limit.
 
-Answers use GPT-4.1-mini and display cited circular IDs, actual 1-based PDF page numbers, and supporting passages. If retrieved evidence is insufficient or cannot be cited, the CLI says so rather than guessing. The listing metadata `page` field is never used as a PDF page citation.
+Answers use GPT-4.1-mini and display cited circular IDs, actual 1-based PDF page numbers, and supporting passages. The CLI also checks answer claims against their cited sources and labels each **Supported**, **Unsupported**, or **Needs review**. If a check fails or source mapping is incomplete, it defaults to **Needs review**; claim splitting and source mapping can be approximate, so labels are an aid rather than a guarantee. The linked source passages remain visible for inspection. If retrieved evidence is insufficient or cannot be cited, the CLI says so rather than guessing. The listing metadata `page` field is never used as a PDF page citation.
 
 ## Retrieval evaluation
 
