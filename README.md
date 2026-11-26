@@ -1,39 +1,61 @@
 # NSE Circular RAG
 
-**Turn thousands of exchange PDFs into answers you can inspect, page by page.**
+A local proof of concept for searching the existing NSE PDF/metadata collection with dense or hybrid retrieval and generating answers with inspectable PDF citations.
 
-NSE circulars can change what businesses and investors need to do—but the important details are often buried in dense documents. NSE Circular RAG helps make those changes clear: ask a question in plain language and get an explanation of what changed, who may be affected, and where to find the supporting passage.
+## Requirements
 
-The planned pipeline extracts PDF text and real page numbers, combines ChromaDB vector search with LlamaIndex BM25 and reciprocal rank fusion, and can rerank results with Cohere
-before LLM answers from cited passages.
+- Python 3.14 and [`uv`](https://docs.astral.sh/uv/)
+- Existing files under `data/pdfs/*.pdf` and `data/metadata/*.json`
+- An OpenAI API key for embedding and answer generation
+- A Cohere trial/API key only when using `hybrid-rerank`
 
-## Requirements at a glance
+Corpus PDFs and metadata are local inputs and are not downloaded by these commands. Chroma vectors and BM25 node data are stored locally under `data/index/`. PDF text is sent to OpenAI for embeddings; retrieved candidate passages are sent to Cohere only in `hybrid-rerank` mode. Keep Cohere queries sequential and within your account's rate limits.
 
-- Ingest the full local PDF and per-document metadata collection, with basic
-  logging for malformed metadata and unreadable or textless PDFs.
-- Preserve actual PDF page numbers and return circular IDs, pages, and evidence
-  passages with answers.
-- Offer dense, hybrid, and hybrid-plus-reranking retrieval over the same corpus.
-- Persist vectors locally; keep ingestion deterministic and simple to rerun.
-
-The planned stack is Python 3.15+, `uv`, PyMuPDF, LlamaIndex, ChromaDB, OpenAI
-embeddings (`text-embedding-3-small`) and GPT-4.1-mini, plus Cohere Rerank v5
-Fast for reranking.
-
-## What’s complete
-
-- A downloader for circular listings, metadata, and PDF or ZIP-wrapped PDF files.
-- Parser and download tests, with saved HTML and PDF samples.
-
-**The full-corpus ingestion and retrieval pipeline is not implemented yet.** The
-RAG components and their API keys will be needed when that work is added.
-
-## Local development
+## Setup
 
 ```bash
 uv sync
+cp -n .env.example .env
+```
+
+Edit `.env` and set `OPENAI_API_KEY`. Set `COHERE_API_KEY` to enable reranking. Keep `.env` private; it is ignored by Git. Commands below load it through `uv`.
+
+If your corpus is not already present, use the existing downloader separately. RAG ingestion itself uses only local files.
+
+## Build the full local index
+
+```bash
+uv run --env-file .env nse-rag ingest
+```
+
+This processes all sorted `data/pdfs/*.pdf` files, matches per-document JSON metadata under `data/metadata/`, and builds a fresh local Chroma collection plus its matching BM25 corpus. The command reports PDFs found, metadata records loaded, documents indexed/skipped and chunks indexed. Re-running `ingest` replaces the POC collection and `data/index/nodes.jsonl`.
+
+Optional input/output paths and embedding batch size:
+
+```bash
+uv run --env-file .env nse-rag ingest \
+  --pdf-dir data/pdfs \
+  --metadata-dir data/metadata \
+  --index-dir data/index \
+  --batch-size 128
+```
+
+## Ask questions
+
+```bash
+uv run --env-file .env nse-rag query "What changed in circular NSE/CMTR/123?" --mode dense
+uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid
+uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid-rerank
+```
+
+Modes are `dense`, `hybrid` (local BM25 + dense retrieval with reciprocal rank fusion), and `hybrid-rerank` (hybrid followed by one Cohere rerank request). All use the same defaults: 20 candidates and 5 final passages. Adjust them with `--candidate-top-k` and `--top-k`; the candidate limit must be at least the result limit.
+
+Answers use GPT-4.1-mini and display cited circular IDs, actual 1-based PDF page numbers, and supporting passages. If retrieved evidence is insufficient or cannot be cited, the CLI says so rather than guessing. The listing metadata `page` field is never used as a PDF page citation.
+
+## Development checks
+
+```bash
 uv run pytest
 ```
 
-Downloaded corpus files belong under `data/pdfs/` and `data/metadata/`; these
-directories are excluded from Git. Sample files are in `data/samples/`.
+The test suite uses mock embeddings, answer models and rerankers; it does not make paid API calls. Full-corpus embedding and live API validation are separate checks.

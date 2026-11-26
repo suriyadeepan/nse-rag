@@ -1,4 +1,4 @@
-- Always read `.current` to establish the active feature and its authoritative requirements, plan, TODO, and journal;
+- Always read `.current` to establish the active feature and its authoritative requirements, plan, TODO, and journal; Keep `.current` local
 
 - Do not read from or write to these directories: ./docs/user/
 
