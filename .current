@@ -1,0 +1,5 @@
+feature: F001 — NSE Corpus Ingestion & Hybrid RAG (POC)
+requirements: docs/001-nse-rag-requirements.md
+plan: docs/001-nse-rag-plan.md
+todo: docs/001-nse-rag-todo.md
+journal: docs/001-nse-rag.md (to be created at implementation start)
