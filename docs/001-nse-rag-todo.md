@@ -64,6 +64,8 @@ Canonical task and status source for F001. Mark tasks complete only when their a
 
 ## T007 — Run automated checks and local deployment smoke checks
 
+- **Status:** COMPLETE — locked sync/import checks, 23 automated tests, CLI help smoke checks, and local Chroma/BM25 persistence/reopen checks passed; evidence and the live-validation boundary are recorded in `docs/001-nse-rag.md`.
+
 - **Action:** Run focused unit/integration tests under `uv`, package/import checks, CLI smoke checks, and local persistence/reopen smoke checks. Fix failures and record commands and outcomes.
 - **Files:** `tests/test_ingest.py`, `tests/test_index_store.py`, `tests/test_retrieval.py`, `tests/test_answer.py`, `docs/001-nse-rag.md`
 - **Requirements / plan:** R009–R014; P006, P010, P013–P015

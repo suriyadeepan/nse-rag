@@ -57,3 +57,11 @@
 - Replaced the placeholder package entry point with `nse-rag ingest` and `nse-rag query`. Ingestion defaults to all sorted local PDFs and metadata, writes the local index, and prints discovered/loaded/indexed/skipped/chunk counts. Query reopens local Chroma and its matching BM25 corpus, selects dense/hybrid/hybrid-rerank, uses shared candidate/result settings, generates a grounded answer, and prints each cited passage with circular ID and actual PDF page.
 - Added README setup and commands, local storage paths, API key configuration, mode descriptions, and a `.env.example` template. `uv run --env-file .env` loads credentials without adding a dotenv dependency; `.env.example` is copied with `cp -n` so an existing local key file is preserved. Cohere mode makes one rerank request per query; docs instruct sequential use within account limits.
 - `uv run pytest -q tests/test_cli.py` passed (3 tests). CLI entry-point smoke checks passed for `nse-rag --help`, `nse-rag ingest --help`, and `nse-rag query --help`. These checks use mocks/help only; no full-corpus embedding or live provider request was made.
+
+## T007 — Automated and local deployment smoke checks
+
+- Dependency/environment checks passed: `uv lock --check`; `uv sync --locked` (141 packages checked); `uv run python -c 'import nse_rag, nse_rag.cli, nse_rag.answer, nse_rag.index_store; print("package imports OK")'`.
+- Automated suite: `PYTHONPATH=scripts uv run pytest -q` passed (23 tests; 6 dependency deprecation warnings). The `PYTHONPATH` exposes the existing downloader module used by its tests.
+- Local persistence smoke: `uv run pytest -q tests/test_index_store.py` passed (2 tests), including fresh local Chroma creation, matching BM25 node set, persisted collection reopen through `open_local_indexes`, and replacement of a stale POC collection.
+- CLI smoke: `uv run --env-file .env nse-rag --help`, `uv run --env-file .env nse-rag ingest --help`, and `uv run --env-file .env nse-rag query --help` all passed. `.env` was loaded by `uv` but its values were not printed; help commands made no provider calls.
+- These are automated and local smoke results only. Full-corpus ingestion, exact-ID/semantic retrieval against that corpus, and live OpenAI/Cohere calls remain for T008.
