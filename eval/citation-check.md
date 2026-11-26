@@ -1,0 +1,19 @@
+# F004 — Citation Integrity Spot-Check
+
+Checked against the saved nine-answer sample in `eval/report.md` and the indexed node corpus `data/index/nodes.jsonl`. For each citation below, the circular ID resolved to the listed indexed PDF, the actual PDF page was within the page count, and the page contained the supporting passage described. Whitespace/line-break differences in extracted PDF text were ignored. These checks establish citation integrity only; they do not prove that every answer claim is entailed by its cited passage.
+
+| Answer sample | Citation | Indexed source PDF (title where available) | Page check | Supporting text on actual PDF page | Result / issue |
+|---|---|---|---|---|---|
+| Dense, query 13: Gayatri Projects trading restart date | `0001fd562caa1c25`, p. 1 | `data/pdfs/0001fd562caa1c25.pdf` — Revocation of Trading Suspension in Equity Shares of Gayatri Projects Limited | PDF has 1 page; p. 1 valid | Page states trading suspension “will be revoked w.e.f. April 09, 2026” and the circular is effective from April 09, 2026. | PASS — no citation integrity issue observed. |
+| Dense, query 16: Hercules name change | `00b388f1536c50c4`, p. 1 | `data/pdfs/00b388f1536c50c4.pdf` — Change in name of Hercules Hoists Limited to Hercules Investments Limited | PDF has 1 page; p. 1 valid | Page lists Hercules Hoists Limited as the existing name, HERCULES INVESTMENTS LIMITED as the new name, and November 24, 2025 as the effective date. | PASS — no citation integrity issue observed. |
+| Hybrid, query 1: subject of circular `0001fd562caa1c25` | `0001fd562caa1c25`, p. 1 | `data/pdfs/0001fd562caa1c25.pdf` — Revocation of Trading Suspension in Equity Shares of Gayatri Projects Limited | PDF has 1 page; p. 1 valid | Page subject reads “Revocation of suspension of trading in equity shares of Gayatri Projects Limited.” | PASS — no citation integrity issue observed. |
+| Hybrid, query 19: Hercules name change date | `00b388f1536c50c4`, p. 1 | `data/pdfs/00b388f1536c50c4.pdf` — Change in name of Hercules Hoists Limited to Hercules Investments Limited | PDF has 1 page; p. 1 valid | Page states the name change is effective November 24, 2025. | PASS — no citation integrity issue observed. |
+| Hybrid, query 19: Current Infraprojects segment transfer date | `0006ec6de19b9b41`, p. 1 | `data/pdfs/0006ec6de19b9b41.pdf` — Trade for Trade - Current Infraprojects Limited (SME IPO) | PDF has 1 page; p. 1 valid | Page states the security will transfer from trade-for-trade to rolling segment effective September 17, 2025. | PASS — no citation integrity issue observed. |
+| Hybrid + rerank, query 9: mock-session fund obligations | `000205e2a3e7c439`, p. 3 | `data/pdfs/000205e2a3e7c439.pdf` — Mock trading on Saturday, November 21, 2026 - New version of NEAT SLBM (1.3.4) | PDF has 4 pages; p. 3 valid | Page says trades during mock sessions will not result in fund pay-in or pay-out. | PASS — no citation integrity issue observed. |
+| Hybrid + rerank, query 9: mock-session fund obligations | `dd3f93aa3d3d8565`, p. 3 | `data/pdfs/dd3f93aa3d3d8565.pdf` — Mock trading on Saturday, November 21, 2026 - No new version release | PDF has 4 pages; p. 3 valid | Page says trades during mock sessions will not result in fund pay-in or pay-out. | PASS — no citation integrity issue observed. |
+
+## Method and limits
+
+- Inspected five representative answer outputs from F002's saved answer-grounding sample; checked every cited circular/page pair in those outputs (seven citation instances, five unique circular/page pairs).
+- Confirmed each circular ID against indexed `pdf_path` metadata, opened that exact PDF with PyMuPDF, checked the 1-based page range and inspected the source page text.
+- This manual spot-check does not evaluate all generated answers or determine whether unrelated/uncited evidence supports each complete answer.
