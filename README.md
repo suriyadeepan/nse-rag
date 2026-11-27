@@ -2,8 +2,8 @@
 
 ![](images/screencast.gif)
 
-A local proof of concept for searching a downloaded exchange circular PDF/metadata collection with dense or hybrid retrieval and generating answers with inspectable PDF citations. The collection is not guaranteed to contain only NSE circulars.
-
+A RAG tool to search downloaded exchange circular PDF/metadata collection with dense or hybrid retrieval and generating answers with inspectable PDF citations. The collection is not guaranteed to contain only NSE circulars. 
+Read my [comprehensive blog](https://suriyadeepan.github.io/2026-11-27-building-nse-circular-intelligence-assistant/) on this.
 ## Architecture
 
 ![](images/ingestion-pipeline.png)
@@ -38,7 +38,7 @@ If your corpus is not already present, use the existing downloader separately. I
 uv run --env-file .env nse-rag ingest
 ```
 
-This processes all sorted `data/pdfs/*.pdf` files, matches per-document JSON metadata under `data/metadata/`, and builds a fresh local Chroma collection plus its matching BM25 corpus. The command reports PDFs found, metadata records loaded, documents indexed/skipped and chunks indexed. Re-running `ingest` replaces the POC collection and `data/index/nodes.jsonl`; incremental or resumable ingestion is not implemented.
+This processes all sorted `data/pdfs/*.pdf` files, matches per-document JSON metadata under `data/metadata/`, and builds a fresh local Chroma collection plus its matching BM25 corpus. The command reports PDFs found, metadata records loaded, documents indexed/skipped and chunks indexed. Re-running `ingest` replaces the collection and `data/index/nodes.jsonl`; incremental or resumable ingestion is not implemented.
 
 Optional input/output paths and embedding batch size:
 
