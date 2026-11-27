@@ -1,8 +1,12 @@
 # NSE Circular RAG
 
+![](images/screencast.gif)
+
 A local proof of concept for searching a downloaded exchange circular PDF/metadata collection with dense or hybrid retrieval and generating answers with inspectable PDF citations. The collection is not guaranteed to contain only NSE circulars.
 
 ## Architecture
+
+![](images/ingestion-pipeline.png)
 
 PyMuPDF extracts PDF text page by page, and LlamaIndex's `SentenceSplitter` creates page-aware chunks. OpenAI `text-embedding-3-small` creates embeddings stored in a local Chroma index; matching chunk text is retained locally so the query CLI can also build the BM25 retriever. Hybrid mode combines dense and BM25 rankings with Reciprocal Rank Fusion (RRF). `hybrid-rerank` sends the fused candidates to Cohere Rerank v5 Fast. GPT-4.1-mini answers from retrieved passages and checks answer claims against their cited passages. Chroma and BM25 data stay under `data/index/`; there is no OCR or hosted vector database.
 
@@ -53,6 +57,8 @@ uv run --env-file .env nse-rag query "What changed in circular NSE/CMTR/123?" --
 uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid
 uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid-rerank
 ```
+
+![](images/retrieval-pipeline.png)
 
 Modes are `dense`, `hybrid` (local BM25 + dense retrieval with reciprocal rank fusion), and `hybrid-rerank` (hybrid followed by one Cohere rerank request). All use the same defaults: 20 candidates and 5 final passages. Adjust them with `--candidate-top-k` and `--top-k`; the candidate limit must be at least the result limit. No metadata filters are available: applying them consistently to both dense and BM25 retrieval before fusion would require additional custom behavior.
 
