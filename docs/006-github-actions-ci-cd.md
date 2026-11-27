@@ -7,6 +7,7 @@
 - Used `astral-sh/setup-uv` and `uv python install` so the Python version comes from repository `.python-version`; locked dependencies are installed in CI before the existing test suite (R001, P001).
 - Used `softprops/action-gh-release` to create the GitHub Release and attach `dist/*`; no PyPI publishing or application deployment is configured (R002, P002–P003).
 - README release instructions require a new tag for each release and say not to move or overwrite tags (R003, P004).
+- Hosted run 45925751747 failed during action resolution because `astral-sh/setup-uv@v10` is not a published ref. Updated both uses to the published `v10.4.0` tag; this is an implementation correction within P001/P002, not a scope change.
 
 ## Verification evidence
 
@@ -25,5 +26,5 @@
 
 ### Hosted verification
 
-- GitHub-hosted CI run: pending; feature branch push is required.
+- GitHub-hosted CI run 45925751747: failed before tests because the `setup-uv@v10` action ref did not resolve. Corrected to `setup-uv@v10.4.0`; rerun pending.
 - Version-tagged release and asset inspection: pending; requires a new `v*` tag after CI succeeds. No release tag has been created as part of implementation.
