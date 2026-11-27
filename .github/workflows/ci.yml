@@ -1,0 +1,53 @@
+name: CI and release
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v10
+
+      - name: Install Python from .python-version
+        run: uv python install
+
+      - name: Install locked dependencies
+        run: uv sync --locked
+
+      - name: Run tests
+        run: uv run pytest -q
+
+  release:
+    name: Build and release package
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v10
+
+      - name: Install Python from .python-version
+        run: uv python install
+
+      - name: Build package
+        run: uv build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: dist/*

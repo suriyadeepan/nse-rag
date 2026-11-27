@@ -105,3 +105,14 @@ uv run pytest
 ```
 
 The test suite uses mock embeddings, answer models and rerankers; it does not make paid API calls. Full-corpus embedding and live API validation are separate checks.
+
+## Releases
+
+After tested changes are merged into the intended release branch (normally `main`), create and push a new version tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+Confirm the GitHub Actions workflow succeeds and the GitHub Release contains the package files built from `dist/`. Use a new version tag for every release; do not move or overwrite an existing release tag.
