@@ -18,7 +18,7 @@
 | Area | Status | Evidence / verification |
 |---|---|---|
 | Python runtime | VERIFIED | `.python-version` is `3.14`; hosted run 45925897742 installed that configured interpreter, synced the lock and passed the suite. |
-| CPU architecture | ASSUMED | Plan targets GitHub-hosted `ubuntu-latest` x86_64; no hosted run evidence exists yet. |
+| CPU architecture | ASSUMED | Hosted run 45925897742 used `ubuntu-latest`; the run evidence confirms Linux but does not record CPU architecture. |
 | Native dependencies | VERIFIED for exercised test paths on hosted Linux | Hosted run 45925897742 completed locked installation and all tests, including compatibility imports and temporary Chroma/PyMuPDF fixtures. |
 | Container format | UNKNOWN / not applicable | No container build or runtime is in scope. |
 | Deployment target | VERIFIED as not applicable | Product is a local CLI; release creates downloadable Python build files only and performs no application deployment. |

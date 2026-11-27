@@ -13,7 +13,7 @@ Canonical task and status source for F006. Mark tasks complete only after their 
 
 ## T002 — Implement tag release job and scoped permissions
 
-- **Status:** IMPLEMENTED — job conditions, permissions and build/upload steps are configured; real tag-triggered release verification remains in T005.
+- **Status:** IMPLEMENTED — local package build passes and job conditions, permissions and upload steps are configured; real tag-triggered release verification remains in T005.
 - **Action:** Add a release job to the same workflow, conditional on pushed `v*` tags and dependent on CI. Build with `uv build` and attach `dist/*` to a GitHub Release. Configure workflow default contents read and release-job contents write only.
 - **Files:** `.github/workflows/ci.yml`, `docs/006-github-actions-ci-cd.md`
 - **Requirements / plan:** R002, A004–A006; P002–P003, P007, P010–P012, P014–P017
@@ -52,5 +52,5 @@ Canonical task and status source for F006. Mark tasks complete only after their 
 - R001 → P001, P005, P007–P009, P012 → T001, T004 → hosted CI configuration and suite evidence.
 - R002 → P002–P003, P007, P010, P012, P014, P016–P017 → T002, T004 → tag condition, dependency, package assets and job permission review.
 - R003 → P004, P011, P013 → T003, T004 → README release procedure review.
-- A001–A007 → P001–P004, P012–P015 → T001–T004 → workflow, tests, package build, README and hosted verification evidence.
+- A001–A003, A007 → P001, P003–P004, P012–P013 → T001, T003–T004 → CI, tests, README and workflow review evidence.
 - A004–A006 → P002–P003, P014, P017 → T005 → real tag run and release asset inspection (pending a future release tag).
