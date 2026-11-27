@@ -1,6 +1,12 @@
 # NSE Circular RAG
 
-A local proof of concept for searching the existing NSE PDF/metadata collection with dense or hybrid retrieval and generating answers with inspectable PDF citations.
+A local proof of concept for searching a downloaded exchange circular PDF/metadata collection with dense or hybrid retrieval and generating answers with inspectable PDF citations. The collection is not guaranteed to contain only NSE circulars.
+
+## Architecture
+
+PyMuPDF extracts PDF text page by page, and LlamaIndex's `SentenceSplitter` creates page-aware chunks. OpenAI `text-embedding-3-small` creates embeddings stored in a local Chroma index; matching chunk text is retained locally so the query CLI can also build the BM25 retriever. Hybrid mode combines dense and BM25 rankings with Reciprocal Rank Fusion (RRF). `hybrid-rerank` sends the fused candidates to Cohere Rerank v5 Fast. GPT-4.1-mini answers from retrieved passages and checks answer claims against their cited passages. Chroma and BM25 data stay under `data/index/`; there is no OCR or hosted vector database.
+
+Indexed metadata can include `circular_id`, `title`, `date`, `category`, `source`, and `pdf_path`. IDs and titles are also included in searchable text; citations use the actual PDF page number extracted by PyMuPDF. Metadata is descriptive and does not prove PDF identity. Its `page` field is an archive listing page and is not used as a PDF citation. Missing or unusable PDFs may be skipped.
 
 ## Requirements
 
@@ -20,7 +26,7 @@ cp -n .env.example .env
 
 Edit `.env` and set `OPENAI_API_KEY`. Set `COHERE_API_KEY` to enable reranking. Keep `.env` private; it is ignored by Git. Commands below load it through `uv`.
 
-If your corpus is not already present, use the existing downloader separately. RAG ingestion itself uses only local files.
+If your corpus is not already present, use the existing downloader separately. It obtains listing/detail information from `exchangecirculars.com` and may extract PDFs from ZIP responses. RAG ingestion itself uses only local files.
 
 ## Build the full local index
 
@@ -28,7 +34,7 @@ If your corpus is not already present, use the existing downloader separately. R
 uv run --env-file .env nse-rag ingest
 ```
 
-This processes all sorted `data/pdfs/*.pdf` files, matches per-document JSON metadata under `data/metadata/`, and builds a fresh local Chroma collection plus its matching BM25 corpus. The command reports PDFs found, metadata records loaded, documents indexed/skipped and chunks indexed. Re-running `ingest` replaces the POC collection and `data/index/nodes.jsonl`.
+This processes all sorted `data/pdfs/*.pdf` files, matches per-document JSON metadata under `data/metadata/`, and builds a fresh local Chroma collection plus its matching BM25 corpus. The command reports PDFs found, metadata records loaded, documents indexed/skipped and chunks indexed. Re-running `ingest` replaces the POC collection and `data/index/nodes.jsonl`; incremental or resumable ingestion is not implemented.
 
 Optional input/output paths and embedding batch size:
 
@@ -48,9 +54,22 @@ uv run --env-file .env nse-rag query "Which trading requirements changed?" --mod
 uv run --env-file .env nse-rag query "Which trading requirements changed?" --mode hybrid-rerank
 ```
 
-Modes are `dense`, `hybrid` (local BM25 + dense retrieval with reciprocal rank fusion), and `hybrid-rerank` (hybrid followed by one Cohere rerank request). All use the same defaults: 20 candidates and 5 final passages. Adjust them with `--candidate-top-k` and `--top-k`; the candidate limit must be at least the result limit.
+Modes are `dense`, `hybrid` (local BM25 + dense retrieval with reciprocal rank fusion), and `hybrid-rerank` (hybrid followed by one Cohere rerank request). All use the same defaults: 20 candidates and 5 final passages. Adjust them with `--candidate-top-k` and `--top-k`; the candidate limit must be at least the result limit. No metadata filters are available: applying them consistently to both dense and BM25 retrieval before fusion would require additional custom behavior.
 
 Answers use GPT-4.1-mini and display cited circular IDs, actual 1-based PDF page numbers, and supporting passages. The CLI also checks answer claims against their cited sources and labels each **Supported**, **Unsupported**, or **Needs review**. If a check fails or source mapping is incomplete, it defaults to **Needs review**; claim splitting and source mapping can be approximate, so labels are an aid rather than a guarantee. The linked source passages remain visible for inspection. If retrieved evidence is insufficient or cannot be cited, the CLI says so rather than guessing. The listing metadata `page` field is never used as a PDF page citation.
+
+## Evaluation and benchmark
+
+Run the saved 24-query retrieval comparison or the smaller latency/cost benchmark against the existing local index:
+
+```bash
+uv run --env-file .env python scripts/evaluate_rag.py
+uv run --env-file .env python scripts/benchmark_performance.py
+```
+
+The evaluator runs 24 source-verified queries through all three modes with 20 candidates and top 5; Cohere requests are sequential and paced. The performance script uses 10 representative queries, one warm-up and three measured repetitions per mode. It also samples five GPT-4.1-mini answers for token usage and cost. Both scripts reuse `data/index`; neither ingests or rebuilds it.
+
+The full F001 ingestion run found 7,614 PDFs and 7,612 per-document metadata JSON files; ingestion loaded 7,611 metadata records, indexed 7,591 documents and skipped 23, producing 36,853 chunks in about 11 minutes 47 seconds. Textless/unusable PDFs account for skips observed in that run. The metadata-file discovery count and ingestion-loaded count describe separate checks.
 
 ## Retrieval evaluation
 
@@ -67,7 +86,11 @@ We compared dense, hybrid (BM25 + dense with reciprocal rank fusion), and hybrid
 
 Nine GPT-4.1-mini answers (three per mode) were manually checked against cited passages; all nine were supported. The separate F003 answer sample used hybrid retrieval: five answers averaged 1.863 s and cost $0.0032728 total (about $0.000655 per sampled answer, or $0.000656 including one estimated query embedding). The `~$0.0000004` table estimates are query-embedding cost only, not account usage; Cohere usage was unavailable. F001's one-time full-corpus embedding cost remains an approximately $0.24 estimate and was not incurred again. OpenAI prices were checked on 2026-11-26.
 
-Reranking improved the overall scores, though semantic-query Recall@5 fell to 0.5000, below dense and hybrid (both 0.6667). See the [F002 evaluation report](eval/report.md) for query-type breakdowns and answer evidence; [ranked results](eval/results.json) contain per-query IDs and metrics. See the [F003 performance report](eval/performance-report.md), [raw measurements](eval/performance-results.json), and [failure analysis](eval/failure-analysis.md) for benchmark details and limitations.
+Reranking improved the overall scores, though semantic-query Recall@5 fell to 0.5000, below dense and hybrid (both 0.6667). The 24-query set contains six source-verified queries of each type: exact ID, keyword/phrase, semantic and multi-circular. Expected IDs were checked against indexed PDFs and relevant page text.
+
+The F003 sample of five GPT-4.1-mini answers used 7,270 input and 228 output tokens, with an estimated $0.0032728 total answer cost ($0.000655 per sampled answer). Query embedding is estimated at about $0.0000004 per query. Cohere usage and rerank cost were unavailable, so rerank cost is not included. The one-time F001 corpus embedding estimate was about $0.24 and was not incurred again for these evaluations.
+
+See the [F002 evaluation report](eval/report.md) for query-type breakdowns and answer evidence; [ranked results](eval/results.json) contain per-query IDs and metrics. See the [F003 performance report](eval/performance-report.md), [raw measurements](eval/performance-results.json), and [failure analysis](eval/failure-analysis.md) for benchmark details, costs and limitations. F004's [claim validation review](eval/claim-validation.md) and [citation integrity spot-check](eval/citation-check.md) record how claim labels and citations were manually examined. Automated claim checks are approximate aids, not guarantees; inspect the linked evidence.
 
 ## Development checks
 
