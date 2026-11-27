@@ -17,9 +17,9 @@
 
 | Area | Status | Evidence / verification |
 |---|---|---|
-| Python runtime | VERIFIED for repository declaration; UNKNOWN on hosted runner | `.python-version` is `3.14`; `pyproject.toml` and `uv.lock` require Python >=3.14. Hosted installation remains to be exercised. |
+| Python runtime | VERIFIED | `.python-version` is `3.14`; hosted run 45925897742 installed that configured interpreter, synced the lock and passed the suite. |
 | CPU architecture | ASSUMED | Plan targets GitHub-hosted `ubuntu-latest` x86_64; no hosted run evidence exists yet. |
-| Native dependencies | ASSUMED for hosted Linux | Locked dependencies include ChromaDB/ONNX Runtime and PyMuPDF; `uv.lock` includes Linux x86_64 wheels for key native packages, but end-to-end install/test is unverified on GitHub. |
+| Native dependencies | VERIFIED for exercised test paths on hosted Linux | Hosted run 45925897742 completed locked installation and all tests, including compatibility imports and temporary Chroma/PyMuPDF fixtures. |
 | Container format | UNKNOWN / not applicable | No container build or runtime is in scope. |
 | Deployment target | VERIFIED as not applicable | Product is a local CLI; release creates downloadable Python build files only and performs no application deployment. |
 

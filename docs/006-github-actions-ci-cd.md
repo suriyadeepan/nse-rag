@@ -28,5 +28,11 @@
 ### Hosted verification
 
 - GitHub-hosted CI run 45925751747: failed before tests because the `setup-uv@v10` action ref did not resolve. Corrected to `setup-uv@v10.4.0`.
-- GitHub-hosted CI run 45925790800: dependency install passed; 32 tests passed and three retrieval tests failed because LlamaIndex attempted default OpenAI LLM initialization. Added its existing `IS_TESTING` mock switch to the test job; credential-free local rerun passes, hosted rerun pending.
-- Version-tagged release and asset inspection: pending; requires a new `v*` tag after CI succeeds. No release tag has been created as part of implementation.
+- GitHub-hosted CI run 45925790800: dependency install passed; 32 tests passed and three retrieval tests failed because LlamaIndex attempted default OpenAI LLM initialization. Added its existing `IS_TESTING` mock switch to the test job; credential-free local rerun and subsequent hosted run pass.
+- GitHub-hosted CI run [45925897742](https://github.com/suriyadeepan/nse-rag/actions/runs/45925897742): **passed** on Ubuntu with the locked dependency install and test suite. The test job took 29 seconds. The release job was skipped because this was a branch push, as expected.
+- Version-tagged release and asset inspection: pending as tracked by T005; requires merge to the intended release branch and a new `v*` tag. No release tag has been created as part of implementation.
+
+## Convergence
+
+- **Status: NOT CONVERGED.**
+- **Finding F001 — Severity: Medium, external verification pending.** Lineage: R002/A004–A006 → P002–P003/P014 → T005. Affected files: `.github/workflows/ci.yml`, `README.md`. Evidence: hosted CI run 45925897742 passed; `uv build` generated the wheel and source archive locally; workflow condition and permissions were reviewed. No actual tag run or Release asset listing exists. The README requires merge then a new tag; creating a release from this feature branch would not follow that procedure. Remaining work: after merge, create a new release tag and inspect the release assets under T005.
