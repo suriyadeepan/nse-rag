@@ -11,6 +11,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      IS_TESTING: "1"
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
